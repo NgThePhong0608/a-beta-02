@@ -1,0 +1,17 @@
+Form Handling:
+    method: Get and Post
+    action: The action attribute specifies where to send the form-data when a form is submitted.
+
+
+Form Validation:
+    This function, test_input(), is used to sanitize the input data before using it. It performs the following tasks:
+    trim(): Removes whitespace from the beginning and end of the string.
+    stripslashes(): Removes backslashes from the string. This is important for security to prevent SQL injection attacks.
+    htmlspecialchars(): Converts special characters to HTML entities. This is crucial for preventing XSS (Cross-Site Scripting) attacks.
+
+Form Require:
+    The required attribute is a boolean attribute. When present, it specifies that an input field must be filled out before submitting the form.
+
+Form URL/Email:
+    The preg_match() function searches a string for pattern, returning true if the pattern exists, and false otherwise.
+
