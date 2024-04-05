@@ -1,0 +1,16 @@
+File handling:
+    - readfile(file_name) : reads the file and returns the content
+    - fread : reads the file and returns the content
+    - fopen(file_name, mode) : opens the file in the specified mode
+    - fclose(file_name) : closes the file
+    - fwrite(file_name, content) : writes the content to the file
+    - file_exists(file_name) : checks if the file exists
+    - is_file(file_name) : checks if the file is a file
+    - is_dir(file_name) : checks if the file is a directory
+    - file_get_contents(file_name) : reads the file and returns the content
+    - fgets(file_name) : reads the file line by line
+
+File Include:
+    - include(file_name) or require(file_name) : includes the file in the current file
+    - include will only produce a warning (E_WARNING) and the script will continue
+    - require will produce a fatal error (E_COMPILE_ERROR) and stop the script
