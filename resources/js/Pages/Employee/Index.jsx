@@ -1,12 +1,14 @@
 import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Link, Head, router } from "@inertiajs/react";
+import Pagination from "@/Components/Pagination";
 
 const Index = ({ auth, employees, success }) => {
     const deleteUser = (employee) => {
-        if (confirm("Are you sure you want to delete this employee?")) {
-            router.delete(route("employee.destroy", employee.id));
-        }
+        // if (confirm("Are you sure you want to delete this employee?")) {
+        //     router.delete(route("employee.destroy", employee.id));
+        // }
+        console.log(employees);
     };
 
     const checkRole = (auth) => {
@@ -152,6 +154,7 @@ const Index = ({ auth, employees, success }) => {
                                 </tbody>
                             </table>
                         </div>
+                        <Pagination links={employees.meta.links} />
                     </div>
                 </div>
             </div>
