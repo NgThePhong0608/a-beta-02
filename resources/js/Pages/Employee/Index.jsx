@@ -5,10 +5,9 @@ import Pagination from "@/Components/Pagination";
 
 const Index = ({ auth, employees, success }) => {
     const deleteUser = (employee) => {
-        // if (confirm("Are you sure you want to delete this employee?")) {
-        //     router.delete(route("employee.destroy", employee.id));
-        // }
-        console.log(employees);
+        if (confirm("Are you sure you want to delete this employee?")) {
+            router.delete(route("employee.destroy", employee.id));
+        }
     };
 
     const checkRole = (auth) => {

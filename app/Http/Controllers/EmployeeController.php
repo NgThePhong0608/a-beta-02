@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CreateUserForEmployee;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Http\Resources\EmployeeResource;
 use App\Models\Employee;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -72,6 +74,7 @@ class EmployeeController extends Controller
             'user_id' => $user->id,
         ]);
         $employee->save();
+        event(new CreateUserForEmployee($user));
         return redirect()->route('employee.index')->with(
             'success',
             'Employee created. An email has been sent to the employee for email verification.'
