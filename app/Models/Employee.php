@@ -10,13 +10,14 @@ class Employee extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'fullname',
         'age',
         'phone',
         'address',
         'city',
         'country',
         'department',
+        'user_id',
     ];
 
     public function timeSheets()
