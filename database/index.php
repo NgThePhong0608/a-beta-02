@@ -185,7 +185,7 @@
                ten, diemthi
         FROM sinhvienk60
         ORDER BY  ten DESC';
-    $retval = mysqli_query($conn, $sql);
+    $retval = mysqli_query($conn, $sql);    
     if (!$retval) {
         die('Khong the lay du lieu: ' . mysqli_error($conn));
     }
