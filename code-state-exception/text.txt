@@ -1,0 +1,93 @@
+- Composer: Composer is a dependency manager for PHP. It allows you to declare the libraries your project depends on and it will manage (install/update) them for you.
+- Coding convention for PHP project: 
+    - Naming: 
+        - Class: CamelCase
+        - Method: camelCase
+        - Variable: camelCase
+        - Constant: UPPERCASE
+    - Indentation: 4 spaces
+    - Line length: 80 characters
+    - PHP tags: `<?php ?>`
+    - PHP closing tag: `?>` is omitted at the end of the file
+    - PHP short tags: `<? ?>` are not used
+    - PSR: PHP Standards Recomendation (PSR) is a set of coding standards for PHP 
+        - PSR-1: 
+            - Files MUST use only `<?php` and `<?=` tags.
+            - Files MUST use only UTF-8 without BOM for PHP code.
+            - Files SHOULD either declare symbols (classes, functions, constants, etc.) or cause side-effects (e.g. generate output, change .ini settings, etc.) but SHOULD NOT do both.
+            - Namespaces and classes MUST follow PSR-0.
+            - Class names MUST be declared in `StudlyCaps`.
+            - Class constants MUST be declared in all upper case with underscore separators.
+            - Method names MUST be declared in `camelCase`.
+        - PSR-2:
+            - Code MUST follow PSR-1.
+            - Code MUST use 4 spaces for indenting, not tabs.
+            - There MUST NOT be a hard limit on line length; the soft limit MUST be 120 characters; lines SHOULD be 80 characters or less.
+            - There MUST be one blank line after the namespace declaration, and there MUST be one blank line after the block of `use` declarations.
+            - Opening braces for classes MUST go on the next line, and closing braces MUST go on the next line after the body.
+            - Opening braces for methods MUST go on the next line, and closing braces MUST go on the next line after the body.
+            - Visibility MUST be declared on all properties and methods; `abstract` and `final` MUST be declared before the visibility; `static` MUST be declared after the visibility.
+            - Control structure keywords MUST have one space after them; method and function calls MUST NOT.
+            - Opening braces for control structures MUST go on the same line, and closing braces MUST go on the next line after the body.
+            - Opening parentheses for control structures MUST NOT have a space after them, and closing parentheses for control structures MUST NOT have a space before.
+        - PSR-0: 
+            - Class names MUST match the capitalization of the directory and file structure.
+            - The underscores in the class name are converted to directory separators. 
+            - The `Autoloader` should be able to load the class from the directory structure.
+        - PSR-4:
+            - The namespace prefix should be the vendor name.
+            - The directory structure should be `src/vendor/package/ClassName.php`.
+            - The `Autoloader` should be able to load the class from the directory structure.
+- Session & Cookie:
+    - Session: 
+        - Session is a way to store information (in variables) to be used across multiple pages.
+        - Session variables hold information about one single user, and are available to all pages in one application.
+        - Session variables are set with the PHP global variable: `$_SESSION`.
+        - Session variables are destroyed when the user closes the browser.
+    - How to use Session: 
+        - Start a PHP Session: `session_start()`
+        - Set Session Variable: `$_SESSION['key'] = value`
+        - Get Session Variable: `$value = $_SESSION['key']`
+        - Remove Session Variable: `unset($_SESSION['key'])`
+        - Destroy the Session: `session_destroy()`
+    - Cookie:
+        - A cookie is a small file that the server embeds on the user's computer.
+        - Each time the same computer requests a page with a browser, it will send the cookie too.
+        - With PHP, you can both create and retrieve cookie values.
+    - How to use Cookie:
+        - Set Cookie: `setcookie(name, value, expire, path, domain, secure, httponly)`
+        - Get Cookie: `$_COOKIE['name']`
+        - Delete Cookie: `setcookie(name, value, time()-3600)`
+- Compare Session vs Cookie:
+    - Cookie:
+        - Data stored on the client
+        - Data can be tampered with
+        - Data can be seen by the client
+        - Data can be seen by the server
+        - Data can be stored for a long time
+    - Session:
+        - Data stored on the server
+        - Data cannot be tampered with
+        - Data cannot be seen by the client
+        - Data can be seen by the server
+        - Data can be stored for a short time
+- Exception in PHP: 
+    - An exception is a way of transferring control from one part of the code to another part of the code.
+    - An exception is a mechanism for handling runtime errors.
+    - Exceptions are thrown and caught using try, catch, and finally blocks.
+    - Throwing an exception: `throw new Exception('message')`
+    - Catching an exception: 
+        ```
+        try {
+            // Code that may throw an exception
+        } catch (Exception $e) {
+            // Code that handles the exception
+        }
+        ```
+    - The `finally` block is always executed after the try block and catch block(s) have been executed.
+
+- Error handling in PHP: 
+    - Error handling is the process of catching errors and taking appropriate action.
+    - Error handling in PHP is done using the `trigger_error()` function.
+    - The `error_reporting()` function sets the error reporting level.
+    - The `set_error_handler()` function sets a user-defined error handler function.
