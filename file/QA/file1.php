@@ -1,5 +1,5 @@
 <?php
-if (isset($_POST["submit"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     $target_dir = "uploads/";
     $target_file = $target_dir . basename($_FILES["banner"]["name"]);
     $uploadOk = 1;
@@ -25,16 +25,22 @@ if (isset($_POST["submit"])) {
         $uploadOk = 0;
     }
 
-    // Kiểm tra nếu $uploadOk = 0
-    if ($uploadOk == 0) {
-        echo "Xin lỗi, tệp của bạn không được tải lên.";
+    $target_file = $target_dir . basename($_FILES["banner"]["name"]);
 
-        // Nếu tất cả mọi thứ đều ổn, thử tải lên tệp
-    } else {
-        if (move_uploaded_file($_FILES["banner"]["tmp_name"], $target_file)) {
-            echo "Tệp " . basename($_FILES["banner"]["name"]) . " đã được tải lên thành công.";
-        } else {
-            echo "Xin lỗi, đã xảy ra lỗi khi tải lên tệp của bạn.";
-        }
+    // Kiểm tra nếu checkbox đã được chọn
+    $create_new = isset($_POST["create_new"]);
+
+    // Kiểm tra xem tệp đã tồn tại chưa
+    if ($uploadOk != 0 && file_exists($target_file) && !$create_new) {
+        // Nếu không tạo ảnh mới, ghi đè lên ảnh cũ
+        unlink($target_file); // Xóa tệp ảnh cũ
+        move_uploaded_file($_FILES["banner"]["tmp_name"], $target_file); // Lưu trữ tệp ảnh mới
+        echo "Tệp " . basename($_FILES["banner"]["name"]) . " đã được ghi đè thành công.";
+    } else if($uploadOk != 0) {
+        // Nếu tạo ảnh mới hoặc tệp không tồn tại, lưu trữ ảnh mới
+        move_uploaded_file($_FILES["banner"]["tmp_name"], $target_file); // Lưu trữ tệp ảnh mới
+        echo "Tệp " . basename($_FILES["banner"]["name"]) . " đã được tải lên thành công.";
+    }else {
+        echo "Xin lỗi, đã xảy ra lỗi khi tải lên tệp của bạn.";
     }
 }
