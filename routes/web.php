@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TimeSheetController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,8 +31,11 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/user/verify/{token}', [EmployeeController::class, 'verifyUser'])->name('user.verify');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('employee', EmployeeController::class);
+    Route::resource('timesheet', TimeSheetController::class);
 });
 
 Route::middleware('auth')->group(function () {
