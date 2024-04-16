@@ -22,12 +22,32 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <a class="navbar-brand" href="{{ url('/users') }}">
-                    {{ __('Users') }}
-                </a>
+
+
+                @guest
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        {{ config('app.name', 'Laravel') }}
+                    </a>
+                @else
+                    @if (Auth::check() && Auth::user()->is_admin)
+                        <a class="navbar-brand" href="{{ url('/') }}">
+                            {{ config('app.name', 'Laravel') }}
+                        </a>
+                        <a class="navbar-brand" href="{{ route('users.index') }}">
+                            {{ __('Users') }}
+                        </a>
+                        <a class="navbar-brand" href="{{ route('posts.index') }}">
+                            {{ __('Posts') }}
+                        </a>
+                    @else
+                        <a class="navbar-brand" href="{{ url('/') }}">
+                            {{ config('app.name', 'Laravel') }}
+                        </a>
+                        <a class="navbar-brand" href="{{ route('posts.myPosts') }}">
+                            {{ __('My Posts') }}
+                        </a>
+                    @endif
+                @endguest
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
