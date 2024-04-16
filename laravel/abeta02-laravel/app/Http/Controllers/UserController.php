@@ -9,15 +9,20 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->authorize(UserPolicy::class);
-    }
+    // public function __construct()
+    // {
+    //     $this->authorize(UserPolicy::class);
+    // }
 
     public function index(Request $request)
     {
-        $users = User::query()->orderBy('name')->paginate(5);
+        $users = User::query()->orderBy('id')->paginate(5);
         return view('users.index', compact('users'));
+    }
+
+    public function show(User $user)
+    {
+        return view('users.show', compact('user'));
     }
 
     public function create()
@@ -39,7 +44,7 @@ class UserController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'User created successfully');
     }
 
     public function edit(User $user)
@@ -59,12 +64,12 @@ class UserController extends Controller
             'email' => $request->email,
         ]);
 
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'User updated successfully');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'User removed successfully');
     }
 }
