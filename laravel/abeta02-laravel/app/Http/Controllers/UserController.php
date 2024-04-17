@@ -57,6 +57,7 @@ class UserController extends Controller
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
+            'password' => bcrypt($request->password),
         ]);
 
         return redirect()->route('users.index')->with('success', 'User updated successfully');
@@ -66,5 +67,12 @@ class UserController extends Controller
     {
         $user->delete();
         return redirect()->route('users.index')->with('success', 'User removed successfully');
+    }
+
+    public function showProfile()
+    {
+        $user = auth()->user();
+        $posts = $user->posts()->paginate(10);
+        return view('users.profile', compact('user', 'posts'));
     }
 }
