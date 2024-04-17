@@ -45,7 +45,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('post.show', compact('post'));
+        $comments = $post->comments()->paginate(10);
+        return view('post.show', compact('post', 'comments'));
     }
 
     /**
@@ -81,5 +82,11 @@ class PostController extends Controller
         $posts = Post::query()->posts()->orderBy('id')->paginate(10);
         dd($posts);
         return view('post.index', compact('posts'));
+    }
+
+    public function getPostComments()
+    {
+        $comments = Post::query()->comments()->paginate(10);
+        return view('post.comment', compact('comments'));
     }
 }

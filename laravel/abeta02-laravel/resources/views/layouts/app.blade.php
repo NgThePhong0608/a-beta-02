@@ -39,6 +39,9 @@
                         <a class="navbar-brand" href="{{ route('posts.index') }}">
                             {{ __('Posts') }}
                         </a>
+                        <a class="navbar-brand" href="{{ route('comments.index') }}">
+                            {{ __('Comments') }}
+                        </a>
                     @else
                         <a class="navbar-brand" href="{{ url('/') }}">
                             {{ config('app.name', 'Laravel') }}

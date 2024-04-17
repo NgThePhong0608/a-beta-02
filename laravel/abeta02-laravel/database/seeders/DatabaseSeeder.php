@@ -21,6 +21,6 @@ class DatabaseSeeder extends Seeder
             'is_admin' => true,
         ]);
 
-        \App\Models\Post::factory(20)->create();
+        \App\Models\Post::factory(20)->hasComments(2)->create();
     }
 }

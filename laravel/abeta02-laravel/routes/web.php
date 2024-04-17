@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -32,10 +33,12 @@ Route::middleware('auth')->get('/dashboard', function () {
 Route::middleware(['auth', 'permission'])->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('posts', PostController::class);
+    Route::resource('comments', CommentController::class);
 });
 
 Route::middleware('auth')->group(function () {
     Route::get('/posts/myPosts', [PostController::class, 'getUserPost'])->name('posts.myPosts');
+    Route::get('/posts/comment', [PostController::class, 'getPostComments'])->name('posts.comment');
 });
 
 Auth::routes();

@@ -25,6 +25,14 @@
                         </div>
                     </div>
                 </div>
+                @if (count($posts) > 0)
+                    <div class="card-header mt-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>{{ __('User : ' . $user->name . " posts's") }}</span>
+                        </div>
+                    </div>
+                    @include('users.post')
+                @endif
             </div>
         </div>
     </div>

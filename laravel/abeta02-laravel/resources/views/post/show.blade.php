@@ -32,6 +32,20 @@
                         </div>
                     </div>
                 </div>
+                @if (count($comments) > 0)
+                    <div class="card-header mt-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>{{ __('Posts : ' . $post->id . " comment's") }}</span>
+                        </div>
+                    </div>
+                    @include('post.comment')
+                @else
+                    <div class="card-header mt-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>{{ __('Posts : ' . $post->id . ' has no comment') }}</span>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

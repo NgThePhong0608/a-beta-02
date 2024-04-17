@@ -23,7 +23,8 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        return view('users.show', compact('user'));
+        $posts = $user->posts()->paginate(10);
+        return view('users.show', compact('user', 'posts'));
     }
 
     public function create()
