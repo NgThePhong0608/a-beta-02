@@ -29,28 +29,6 @@ class TimeSheetController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return inertia('TimeSheet/Create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'employee_id' => 'required',
-            'start_time' => 'required',
-            'end_time' => 'required',
-        ]);
-
-        TimeSheet::create($data);
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(TimeSheet $timeSheet)
@@ -58,21 +36,6 @@ class TimeSheetController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(TimeSheet $timeSheet)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, TimeSheet $timeSheet)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.

@@ -3,6 +3,8 @@
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TimeSheetController;
+use App\Http\Controllers\CheckinController;
+use App\Http\Controllers\CheckoutController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,7 +30,9 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('Dashboard', [
+        'success' => session('success'),
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/user/verify/{token}', [EmployeeController::class, 'verifyUser'])->name('user.verify');
@@ -36,6 +40,12 @@ Route::get('/user/verify/{token}', [EmployeeController::class, 'verifyUser'])->n
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('employee', EmployeeController::class);
     Route::resource('timesheet', TimeSheetController::class);
+
+    Route::get('/checkin', [CheckinController::class, 'create'])->name('checkin');
+    Route::post('/checkin', [CheckinController::class, 'store'])->name('checkin.store');
+
+    Route::get('/checkout', [CheckoutController::class, 'create'])->name('checkout');
+    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 });
 
 Route::middleware('auth')->group(function () {

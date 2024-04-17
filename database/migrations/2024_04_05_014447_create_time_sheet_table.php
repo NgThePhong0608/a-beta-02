@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('date');
             $table->time('time_in');
             $table->time('time_out');
-            $table->time('duration');
+            $table->unsignedInteger('duration');
             $table->timestamps();
         });
     }

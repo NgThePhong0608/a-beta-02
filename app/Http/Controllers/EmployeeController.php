@@ -6,11 +6,14 @@ use App\Events\CreateUserForEmployee;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Http\Resources\EmployeeResource;
+use App\Mail\VerifyMail;
 use App\Models\Employee;
 use App\Models\User;
+use App\Models\VerifyUser;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class EmployeeController extends Controller
 {
@@ -60,7 +63,7 @@ class EmployeeController extends Controller
         $user = User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
-            'password' => Hash::make('password'),
+            'password' => Hash::make($validatedData['password']),
         ]);
         $validatedData['user_id'] = $user->id;
         $employee = Employee::make([
@@ -74,7 +77,14 @@ class EmployeeController extends Controller
             'user_id' => $user->id,
         ]);
         $employee->save();
-        event(new CreateUserForEmployee($user));
+
+        $verifyUser = VerifyUser::create([
+            'user_id' => $user->id,
+            'token' => sha1(time()),
+        ]);
+
+        Mail::to($user->email)->send(new VerifyMail($user));
+
         return redirect()->route('employee.index')->with(
             'success',
             'Employee created. An email has been sent to the employee for email verification.'
@@ -138,5 +148,23 @@ class EmployeeController extends Controller
         $employee->delete();
 
         return redirect()->route('employee.index')->with('success', 'Employee deleted.');
+    }
+    public function verifyUser($token)
+    {
+        $verifyUser = VerifyUser::where('token', $token)->first();
+        if(isset($verifyUser) ){
+            $user = $verifyUser->user;
+            if(!$user->verified) {
+                $verifyUser->user->email_verified_at = now();
+                $verifyUser->user->save();
+                auth()->login($verifyUser->user);
+                $status = "Your e-mail is verified. You can now login.";
+            } else {
+                $status = "Your e-mail is already verified. You can now login.";
+            }
+        } else {
+            return redirect()->route('login')->with('warning', "Sorry your email cannot be identified.");
+        }
+        return redirect()->route('login')->with('status', $status);
     }
 }

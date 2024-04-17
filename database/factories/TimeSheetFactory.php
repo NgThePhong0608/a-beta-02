@@ -25,10 +25,13 @@ class TimeSheetFactory extends Factory
         $startTime = $this->faker->time('H:i:s');
         $endTime = $this->faker->time('H:i:s', $startTime);
 
-        $start = Carbon::parse($startTime);
-        $end = Carbon::parse($endTime);
 
-        $duration = $end->diff($start)->format('%H:%I:%S');
+        $dateTime1 = \DateTime::createFromFormat('H:i:s', $startTime);
+        $dateTime2 = \DateTime::createFromFormat('H:i:s', $endTime);
+
+        $timeDifference = $dateTime1->diff($dateTime2);
+
+        $duration = $timeDifference->h;
 
         return [
             'employee_id' => $this->faker->randomElement($employeeIds),

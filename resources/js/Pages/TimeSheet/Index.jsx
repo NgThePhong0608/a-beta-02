@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Link, Head } from '@inertiajs/react';
 import Pagination from '@/Components/Pagination';
