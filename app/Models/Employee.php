@@ -31,4 +31,29 @@ class Employee extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // local scope
+
+    public function scopeSearch($query, $search)
+    {
+        if (request("fullname")) {
+            $query->where("fullname", "like", "%" . request("fullname") . "%");
+        }
+//        if (request("email")) {
+//            $user->where("email", "like", "%" . request("email") . "%");
+//        }
+        if (request("department")){
+            $query->where("department", "like", "%" . request("department") . "%");
+        }
+
+        if (request('search')){
+            $query->where('fullname', 'like', '%' . \request('search') . '%')
+                ->orWhere('phone', 'like', '%' . \request('search') . '%')
+                ->orWhere('city', 'like', '%' . \request('search') . '%')
+                ->orWhere('country', 'like', '%' . \request('search') . '%')
+                ->orWhere('address', 'like', '%' . \request('search') . '%')
+                ->orWhere('age', 'like', '%' . \request('search') . '%');
+        }
+        return $query;
+    }
 }

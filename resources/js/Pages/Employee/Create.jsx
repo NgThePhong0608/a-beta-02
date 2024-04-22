@@ -4,6 +4,7 @@ import { Link, Head, useForm } from "@inertiajs/react";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
+import SelectInput from "@/Components/SelectInput.jsx";
 
 const Create = ({ auth }) => {
 
@@ -222,14 +223,17 @@ const Create = ({ auth }) => {
                                 <div className="mt-4">
                                     <InputLabel htmlFor="department" value="Department" />
 
-                                    <TextInput
-                                        id="department"
-                                        type="text"
+                                    <SelectInput
                                         name="department"
-                                        value={data.department}
+                                        id="department"
                                         className="mt-1 block w-full"
                                         onChange={(e) => setData("department", e.target.value)}
-                                    />
+                                    >
+                                        <option value="">Select Department</option>
+                                        <option value="hades">Hades</option>
+                                        <option value="faderless">Faderless</option>
+                                        <option value="warrior">Warrior</option>
+                                    </SelectInput>
 
                                     <InputError message={errors.department} className="mt-2" />
                                 </div>

@@ -24,18 +24,11 @@ class EmployeeController extends Controller
     {
 
         $query = Employee::query()->with("user");
-
-        $sortField = request("sort_field", 'created_at');
+        $sortField = request("sort_field", 'id');
         $sortDirection = request("sort_direction", "desc");
 
-        if (request("name")) {
-            $query->where("name", "like", "%" . request("name") . "%");
-        }
-        if (request("email")) {
-            $query->where("email", "like", "%" . request("email") . "%");
-        }
-
         $employees = $query->orderBy($sortField, $sortDirection)
+            ->search($query, request("search"))
             ->paginate(10)
             ->onEachSide(1);
 
