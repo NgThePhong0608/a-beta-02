@@ -19,6 +19,14 @@ class CheckinController extends Controller
 
         $data = $request->validated();
         $data['employee_id'] = auth()->user()->employee->id;
+        $data['time_out'] = null;
+        if (!empty($data['time_in'])) {
+            $timeInTimestamp = strtotime($data['time_in']);
+            $eightAMTimestamp = strtotime(date('Y-m-d 08:00:00'));
+            if ($timeInTimestamp > $eightAMTimestamp) {
+                $data['status'] = 'Late';
+            }
+        }
         $query = TimeSheet::query();
         $res = $query->where('employee_id', auth()->user()->employee->id)
             ->where('date', $data['date'])

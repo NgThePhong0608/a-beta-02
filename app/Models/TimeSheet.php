@@ -17,6 +17,8 @@ class TimeSheet extends Model
         'date',
         'time_in',
         'time_out',
+        'duration',
+        'status'
     ];
 
     public function employee(): BelongsTo

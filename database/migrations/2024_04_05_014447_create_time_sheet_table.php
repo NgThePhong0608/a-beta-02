@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('employee_id')->constrained()->cascadeOnDelete();
             $table->date('date');
             $table->time('time_in');
-            $table->time('time_out');
-            $table->unsignedInteger('duration');
+            $table->time('time_out')->nullable();
+            $table->unsignedInteger('duration')->nullable();
             $table->timestamps();
         });
     }

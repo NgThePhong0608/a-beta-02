@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CheckoutRequest;
 use App\Models\TimeSheet;
-use Illuminate\Support\Facades\DB;
 
 class CheckoutController extends Controller
 {
@@ -21,24 +20,29 @@ class CheckoutController extends Controller
 
     public function store(CheckoutRequest $request)
     {
-        DB::beginTransaction();
-        try {
-            $id = auth()->user()->employee->id ?? null;
-            if (!$id) {
-                return redirect()->route('dashboard')->with('error', 'Employee not found');
-            }
-            $query = TimeSheet::query();
-            $res = $query->where('employee_id', $id )
-                ->where('date', date('Y-m-d'))
-                ->first();
-            $data = $request->validated();
-            $data['duration'] = $this->calculateDuration($res->time_in, $data['time_out']);
-            $res->update($data);
-            DB::commit();
-            return redirect()->route('dashboard')->with('success', 'Check out successfully');
-        } catch (\Exception $e) {
-            DB::rollBack();
+        $id = auth()->user()->employee->id ?? null;
+        if (!$id) {
+            return redirect()->route('dashboard')->with('error', 'Employee not found');
         }
+        $query = TimeSheet::query();
+        $res = $query->where('employee_id', $id)
+            ->where('date', date('Y-m-d'))
+            ->first();
+        $data = $request->validated();
+        $data['time_in'] = $res->time_in;
+        $data['duration'] = $this->calculateDuration($res->time_in, $data['time_out']);
+        if ($data['duration'] < 8) {
+            $data['status'] = 'Early';
+        } else {
+            if ($this->calculateDuration($res->time_out, '18:00:00') > 0) {
+                $data['status'] = 'OT '.$this->calculateDuration($res->time_out, $data['time_out']).'h';
+            } else {
+                $data['status'] = 'On Time';
+            }
+        }
+        $res->update($data);
+        return redirect()->route('dashboard')->with('success', 'Check out successfully');
+
     }
 
     public function calculateDuration($time_in, $time_out): string

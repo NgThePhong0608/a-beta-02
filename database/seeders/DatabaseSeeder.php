@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
 
         $users->each(function ($user) {
             $employee = Employee::factory()->create(['user_id' => $user->id]);
-            $employee->timeSheets()->saveMany(TimeSheet::factory(10)->make());
+            $employee->timeSheets()->saveMany(TimeSheet::factory(5)->make());
         });
     }
 }
