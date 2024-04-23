@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -79,7 +80,7 @@ class PostController extends Controller
 
     public function getUserPost()
     {
-        $posts = Post::query()->posts()->orderBy('id')->paginate(10);
+        $posts = User::query()->where('id', auth()->user()->id)->posts()->orderBy('id')->paginate(10);
         dd($posts);
         return view('post.index', compact('posts'));
     }
