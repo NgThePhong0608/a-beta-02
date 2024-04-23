@@ -12,7 +12,7 @@ class CreatePostCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'post:create {--title=} {--content=} {--user_id=}';
+    protected $signature = 'post:create';
 
     /**
      * The console command description.
@@ -26,8 +26,8 @@ class CreatePostCommand extends Command
      */
     public function handle()
     {
-        $title = $this->option('title');
-        $content = $this->option('content');
+        $title =  fake()->sentence();
+        $content =  fake()->paragraph();
         Post::query()->create([
             'title' => $title,
             'content' => $content,
