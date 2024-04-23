@@ -22,6 +22,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
+                                    <th scope="col">Image</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Action</th>
@@ -31,6 +32,10 @@
                                 @foreach ($users as $user)
                                     <tr>
                                         <th scope="row">{{ $user->id }}</th>
+                                        <td>
+                                            <img src="{{ $user->image_url }}" alt="{{ $user->name }}"
+                                                style="width: 50px; height: 50px; object-fit: cover;">
+                                        </td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>

@@ -13,9 +13,15 @@
                     </div>
 
                     <div class="card-body">
-                        <form action="{{ route('users.update', $user->id) }}" method="POST">
+                        <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
+                            <div class="form-control-file">
+                                <img src="{{ $user->image_url }}" alt="{{ $user->name }}" class="img-thumbnail"
+                                    alt="User Image">
+                                <input type="file" class="form-control-file" id="image_url" name="image_url"
+                                    accept="image/*">
+                            </div>
                             <div class="form-group">
                                 <label for="name">Name</label>
                                 <input type="text" class="form-control" id="name" name="name"

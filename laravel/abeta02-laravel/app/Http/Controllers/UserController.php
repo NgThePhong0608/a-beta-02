@@ -6,6 +6,7 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Policies\UserPolicy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -52,15 +53,15 @@ class UserController extends Controller
 
     public function update(UserRequest $request, User $user)
     {
-        $request->validated();
+        $data = $request->validated();
 
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
-
-        return redirect()->route('users.index')->with('success', 'User updated successfully');
+        if ($request->hasFile('image_url')) {
+            $imageUrl = $this->storeImage($request);
+            $data['image_url'] = $imageUrl;
+        } else {
+            $data['image_url'] = $user->image_url;
+        }
+        $user->update($data);
     }
 
     public function destroy(User $user)
@@ -74,5 +75,15 @@ class UserController extends Controller
         $user = auth()->user();
         $posts = $user->posts()->paginate(10);
         return view('users.profile', compact('user', 'posts'));
+    }
+
+    protected function storeImage(Request $request)
+    {
+        if ($request->hasFile('image_url')) {
+            // $path = $request->file('image_url')->store('public/users');
+            $path = $request->file('image_url')->storeAs('public/users', $request->file('image_url')->getClientOriginalName());
+            return substr($path, strlen('public/'));
+        }
+        return null; // or throw an exception if file is required
     }
 }
