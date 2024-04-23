@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/posts/myPosts', [PostController::class, 'getUserPost'])->name('posts.myPosts');
     Route::get('/posts/comment', [PostController::class, 'getPostComments'])->name('posts.comment');
     Route::get('/profile', [UserController::class, 'showProfile'])->name('profile');
+    Route::get('/send-welcome-mail', [UserController::class, 'sendWelcomeMail'])->name('send-welcome-mail');
 });
 
 Auth::routes();

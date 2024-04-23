@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Mail\WelcomeEmail;
 use App\Models\User;
 use App\Policies\UserPolicy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
@@ -85,5 +87,12 @@ class UserController extends Controller
             return substr($path, strlen('public/'));
         }
         return null; // or throw an exception if file is required
+    }
+
+    public function sendWelcomeMail()
+    {
+        $user = auth()->user();
+        Mail::to($user->email)->send(new WelcomeEmail($user));
+        return redirect()->route('profile')->with('success', 'Welcome email sent successfully');
     }
 }
