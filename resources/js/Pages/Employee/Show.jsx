@@ -16,6 +16,12 @@ const Show = ({ auth, employee }) => {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                        <div className="flex itmems-center justify-center rounded-sm">
+                            <img
+                                src={employee.image_url}
+                                className="max-w-64 h-64 object-cover"
+                            />
+                        </div>
                         <div className="p-6 text-gray-900 dark:text-gray-100">
                             <div className="grid gap-1 grid-cols-2 mt-2">
                                 <div className="grid-cols-3">

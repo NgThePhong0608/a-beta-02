@@ -22,22 +22,29 @@ class TimeSheetFactory extends Factory
 
         $date = $this->faker->dateTimeBetween('-30 days', 'now')->format('Y-m-d');
 
-        $startTime = $this->faker->time('H:i:s');
-        $endTime = $this->faker->time('H:i:s', $startTime);
+        $time_in = $this->faker->time('H:i:s');
+        $time_out = $this->faker->time('H:i:s', $time_in);
 
+        $dateTime1 = \DateTime::createFromFormat('H:i:s', $time_in);
+        $dateTime2 = \DateTime::createFromFormat('H:i:s', $time_out);
 
-        $dateTime1 = \DateTime::createFromFormat('H:i:s', $startTime);
-        $dateTime2 = \DateTime::createFromFormat('H:i:s', $endTime);
+        while ($dateTime2 <= $dateTime1) {
+            $time_out = $this->faker->time('H:i:s', $time_in);
+            $dateTime2 = \DateTime::createFromFormat('H:i:s', $time_out);
+        }
 
         $timeDifference = $dateTime1->diff($dateTime2);
 
-        $duration = $timeDifference->h;
+        $totalHours = $timeDifference->h;
+        $totalMinutes = $timeDifference->i;
+
+        $duration = $totalHours + $totalMinutes / 60;
 
         return [
             'employee_id' => $this->faker->randomElement($employeeIds),
             'date' => $date,
-            'time_in' => $this->faker->time(),
-            'time_out' => $this->faker->time(),
+            'time_in' => $time_in,
+            'time_out' => $time_out,
             'duration' => $duration,
         ];
     }

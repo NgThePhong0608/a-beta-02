@@ -4,21 +4,23 @@ import { Link, Head, useForm } from "@inertiajs/react";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
+import SelectInput from "@/Components/SelectInput.jsx";
 
 const Edit = ({ auth, employee }) => {
 
     const { data, setData, post, errors, reset } = useForm({
-        name: employee.user.name,
-        email: employee.user.email,
-        fullname: employee.name,
+        name: employee.user.name || "",
+        image_url: employee.image_url || "",
+        email: employee.user.email || "",
+        fullname: employee.name || "",
         age: employee.age,
         password: "",
         password_confirmation: "",
-        phone: employee.phone,
-        address: employee.address,
-        city: employee.city,
-        country: employee.country,
-        department: employee.department,
+        phone: employee.phone || "",
+        address: employee.address || "",
+        city: employee.city || "",
+        country: employee.country || "",
+        department: employee.department || "",
         _method: "PUT",
     });
 
@@ -49,6 +51,22 @@ const Edit = ({ auth, employee }) => {
                             className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg grid grid-cols-2 gap-4"
                         >
                             <div className="col-span-2 sm:col-span-1">
+
+                                <div className="mt-4">
+                                    <InputLabel
+                                        htmlFor="image_url"
+                                        value={"Employee Image"}
+                                    />
+                                    <TextInput
+                                        id="image_url"
+                                        type="file"
+                                        name="image_url"
+                                        className="mt-1 block w-full"
+                                        onChange={(e) => setData("image_url", e.target.files[0])}
+                                    />
+                                    <InputError message={errors.image} className="mt-2" />
+                                </div>
+
                                 <div className="mt-4">
                                     <InputLabel htmlFor="user_name" value="Employee User Name" />
 
@@ -223,14 +241,18 @@ const Edit = ({ auth, employee }) => {
                                 <div className="mt-4">
                                     <InputLabel htmlFor="department" value="Department" />
 
-                                    <TextInput
-                                        id="department"
-                                        type="text"
+                                    <SelectInput
                                         name="department"
-                                        value={data.department}
+                                        id="department"
                                         className="mt-1 block w-full"
                                         onChange={(e) => setData("department", e.target.value)}
-                                    />
+                                    >
+                                        <option value="">{employee.department}</option>
+                                        <option value="HADES">Hades</option>
+                                        <option value="FADERLESS">Faderless</option>
+                                        <option value="WARRIOR">Warrior</option>
+                                        <option value="PHOENIX">Phoenix</option>
+                                    </SelectInput>
 
                                     <InputError message={errors.department} className="mt-2" />
                                 </div>

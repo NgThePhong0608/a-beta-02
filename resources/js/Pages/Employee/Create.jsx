@@ -230,9 +230,10 @@ const Create = ({ auth }) => {
                                         onChange={(e) => setData("department", e.target.value)}
                                     >
                                         <option value="">Select Department</option>
-                                        <option value="hades">Hades</option>
-                                        <option value="faderless">Faderless</option>
-                                        <option value="warrior">Warrior</option>
+                                        <option value="HADES">Hades</option>
+                                        <option value="FADERLESS">Faderless</option>
+                                        <option value="WARRIOR">Warrior</option>
+                                        <option value="PHOENIX">Phoenix</option>
                                     </SelectInput>
 
                                     <InputError message={errors.department} className="mt-2" />

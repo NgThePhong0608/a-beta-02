@@ -10,7 +10,9 @@ class CheckoutController extends Controller
     public function create()
     {
         $query = TimeSheet::query();
-        $res = $query->where('employee_id', auth()->user()->employee->id)->first();
+        $res = $query->where('employee_id', auth()->user()->employee->id)
+            ->where('date', date('Y-m-d'))
+            ->first();
         $time_in = $res->time_in ?? null;
         return inertia('Checkout/Create', [
             'success' => session('success'),
@@ -25,23 +27,25 @@ class CheckoutController extends Controller
             return redirect()->route('dashboard')->with('error', 'Employee not found');
         }
         $query = TimeSheet::query();
-        $res = $query->where('employee_id', $id)
-            ->where('date', date('Y-m-d'))
-            ->first();
         $data = $request->validated();
+        $res = $query->where('employee_id', $id)
+            ->where('date', $data['date'])
+            ->first();
         $data['time_in'] = $res->time_in;
+        $data['status']  = $res->status;
         $data['duration'] = $this->calculateDuration($res->time_in, $data['time_out']);
         if ($data['duration'] < 8) {
-            $data['status'] = 'Early';
+            $data['status'] = $data['status'] . ' ,Leave early';
         } else {
             if ($this->calculateDuration($res->time_out, '18:00:00') > 0) {
-                $data['status'] = 'OT '.$this->calculateDuration($res->time_out, $data['time_out']).'h';
+                $data['status'] = $data['status'] . ' ,OT '.$this->calculateDuration($res->time_out, $data['time_out']).'h';
             } else {
-                $data['status'] = 'On Time';
+                $data['status'] = $data['status']. ' ,On Time';
             }
         }
         $res->update($data);
-        return redirect()->route('dashboard')->with('success', 'Check out successfully');
+        return redirect()->route('dashboard')->with('success',
+            'Check out successfully at: '.$data['time_out'].' , '.$data['date']);
 
     }
 

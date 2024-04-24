@@ -17,6 +17,7 @@ class EmployeeFactory extends Factory
     public function definition(): array
     {
         return [
+            'image_url' => $this->faker->imageUrl(),
             'fullname' => $this->faker->name,
             'age' => $this->faker->numberBetween(18, 35),
             'phone' => $this->faker->phoneNumber,

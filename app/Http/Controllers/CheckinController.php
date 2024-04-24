@@ -36,6 +36,6 @@ class CheckinController extends Controller
         } else {
             TimeSheet::create($data);
         }
-        return redirect()->route('checkout')->with('success', 'Check in successfully');
+        return redirect()->route('checkout')->with('success', 'Check in successfully at: ' . $data['time_in'] . ' , '. $data['date']);
     }
 }

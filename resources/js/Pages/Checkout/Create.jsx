@@ -12,10 +12,14 @@ const Create = ({auth, success, time_in}) => {
     ].join(':');
 
     const { data, setData, post, errors, reset } = useForm({
-        time_out:formattedTime,
+        time_out: formattedTime,
         date:  time.toISOString().slice(0, 10),
-        time_in
+        time_in: time_in,
     });
+
+    useEffect(() => {
+        console.log({...data})
+    })
 
     const [isOpen, setOpen] = useState(false);
 

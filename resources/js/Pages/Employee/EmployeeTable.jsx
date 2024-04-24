@@ -68,6 +68,7 @@ const EmployeeTable = ({auth, employees, queryParams = null, success}) => {
                         >
                             ID
                         </TableHeading>
+                        <th className="px-3 py-3">Image</th>
                         <TableHeading
                             name="fullname"
                             sort_field={queryParams.sort_field}
@@ -137,6 +138,7 @@ const EmployeeTable = ({auth, employees, queryParams = null, success}) => {
                         className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
                     <tr className="text-nowrap">
                         <th className="px-3 py-3"></th>
+                        <th className="px-3 py-3"></th>
                         <th className="px-5 py-3">
                             <TextInput
                                 className="w-full"
@@ -174,6 +176,9 @@ const EmployeeTable = ({auth, employees, queryParams = null, success}) => {
                             key={employee.id}
                         >
                             <td className="px-3 py-2">{employee.id}</td>
+                            <td className="px-3 py-2">
+                                <img src={employee.image_url} alt={employee.fullname} />
+                            </td>
                             <th className="px-5 py-3 text-black-100 text-nowrap hover:underline">
                                 <Link href={route("employee.show", employee.id)}>{employee.name}</Link>
                             </th>
@@ -197,20 +202,24 @@ const EmployeeTable = ({auth, employees, queryParams = null, success}) => {
                                     }
                                 )}
                             </td>
-                            <td className="px-3 py-2 text-nowrap">
-                                <Link
-                                    href={route("employee.edit", employee.id)}
-                                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1"
-                                >
-                                    Edit
-                                </Link>
-                                <button
-                                    onClick={(e) => deleteEmployee(employee)}
-                                    className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1"
-                                >
-                                    Delete
-                                </button>
-                            </td>
+                            {
+                                checkRole(auth) && (
+                                    <td className="px-3 py-2 text-nowrap">
+                                        <Link
+                                            href={route("employee.edit", employee.id)}
+                                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1"
+                                        >
+                                            Edit
+                                        </Link>
+                                        <button
+                                            onClick={(e) => deleteEmployee(employee)}
+                                            className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1"
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                )
+                            }
                         </tr>
                     ))}
                     </tbody>
