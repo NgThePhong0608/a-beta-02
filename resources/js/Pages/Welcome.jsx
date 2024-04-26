@@ -4,9 +4,14 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
     return (
         <>
             <Head title="Welcome" />
-            <div className="max-h-full max-w-full">
-                <nav className="bg-white">
-                    <div className="max-w-screen-xl mx-auto px-2 sm:px-6 lg:px-8">
+            <header class="flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full py-7">
+                <nav class="relative max-w-7xl w-full flex flex-wrap md:grid md:grid-cols-12 basis-full items-center px-4 md:px-6 md:px-8 mx-auto" aria-label="Global">
+                    <div class="md:col-span-3">
+                        <a class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80" href="#" aria-label="Amela">
+                            <img className="h-20 w-auto" src="https://static.vecteezy.com/system/resources/previews/007/263/716/non_2x/hrm-letter-logo-design-on-white-background-hrm-creative-initials-letter-logo-concept-hrm-letter-design-vector.jpg" alt="AMELA Technology" decoding="async"></img>
+                        </a>
+                    </div>
+                    <div class="flex items-center gap-x-2 ms-auto py-1 md:ps-6 md:order-3 md:col-span-3">
                         <div className="relative flex h-16 items-center justify-between">
                             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                                 <button type="button" className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
@@ -22,18 +27,9 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             </div>
                             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                                 <div className="flex flex-shrink-0 items-center">
-                                    <img className="h-20 w-auto" src="https://static.vecteezy.com/system/resources/previews/007/263/716/non_2x/hrm-letter-logo-design-on-white-background-hrm-creative-initials-letter-logo-concept-hrm-letter-design-vector.jpg" alt="AMELA Technology" decoding="async"></img>
                                 </div>
                             </div>
                             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                                {/* <button type="button" className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                                <span className="absolute -inset-1.5"></span>
-                                <span className="sr-only">View notifications</span>
-                                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-                                </svg>
-                            </button> */}
-
                                 <div className="relative ml-3">
                                     <div>
                                         {auth.user ? (
@@ -60,50 +56,50 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                                 </Link>
                                             </>
                                         )}
-                                        {/* <button type="button" className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                                        <span className="absolute -inset-1.5"></span>
-                                        <img className="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-                                    </button> */}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div id="navbar-collapse-with-animation" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow md:block md:w-auto md:basis-auto md:order-2 md:col-span-6">
+                    </div>
                 </nav>
+            </header>
+            
+            <main className="min-h-screen">
+                <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-12">
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Welcome to Our Website</h1>
+                    <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget libero nec dui vestibulum aliquam ac et velit. Fusce scelerisque eros eu lectus facilisis, in malesuada urna tincidunt. Integer rutrum est non aliquet pharetra. Duis in faucibus mauris. Cras feugiat dui nec semper sagittis. Proin pretium, purus id varius luctus, nisl tortor volutpat felis, a euismod enim purus sit amet purus. Vivamus et libero nec urna accumsan consequat. Quisque sed libero odio. Donec tristique nisi vel libero dictum, vel bibendum eros vulputate. Proin efficitur a odio at lobortis. Suspendisse potenti. Morbi lobortis urna id ante egestas, et eleifend libero pulvinar. Sed ac felis ut urna placerat luctus. Nulla a erat in elit consectetur tincidunt.</p>
+                    <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">Phasellus in tempor dui, id consequat eros. In id fermentum libero. Ut hendrerit justo sit amet purus accumsan, vitae egestas sapien blandit. Mauris id interdum ligula, at vulputate libero. Integer feugiat velit nec sapien ultricies dignissim. Nulla posuere, lorem id fermentum vestibulum, dolor justo fermentum velit, at molestie risus justo vitae sapien. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis non ex id ante mattis faucibus sed ut velit. Nam vel magna quis enim tempus dapibus. Nulla facilisi.</p>
+                    <p className="text-lg text-gray-700 dark:text-gray-300">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut ut ex at lorem tristique lacinia. Vestibulum id massa in nisi consectetur bibendum non at ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse potenti. Curabitur pulvinar posuere odio, eget ultricies libero consequat ac. Sed auctor, est quis iaculis tincidunt, mi nisi laoreet elit, at convallis risus sem nec libero. Phasellus ut venenatis nibh, eu tempor nunc. Vivamus in ex id nisl vehicula congue a sit amet erat. Vivamus aliquet eleifend libero, vel consequat nisi gravida ut.</p>
+                </div>
+            </main>
 
-                <main className="min-h-screen">
-                    <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-12">
-                        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Welcome to Our Website</h1>
-                        <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget libero nec dui vestibulum aliquam ac et velit. Fusce scelerisque eros eu lectus facilisis, in malesuada urna tincidunt. Integer rutrum est non aliquet pharetra. Duis in faucibus mauris. Cras feugiat dui nec semper sagittis. Proin pretium, purus id varius luctus, nisl tortor volutpat felis, a euismod enim purus sit amet purus. Vivamus et libero nec urna accumsan consequat. Quisque sed libero odio. Donec tristique nisi vel libero dictum, vel bibendum eros vulputate. Proin efficitur a odio at lobortis. Suspendisse potenti. Morbi lobortis urna id ante egestas, et eleifend libero pulvinar. Sed ac felis ut urna placerat luctus. Nulla a erat in elit consectetur tincidunt.</p>
-                        <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">Phasellus in tempor dui, id consequat eros. In id fermentum libero. Ut hendrerit justo sit amet purus accumsan, vitae egestas sapien blandit. Mauris id interdum ligula, at vulputate libero. Integer feugiat velit nec sapien ultricies dignissim. Nulla posuere, lorem id fermentum vestibulum, dolor justo fermentum velit, at molestie risus justo vitae sapien. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis non ex id ante mattis faucibus sed ut velit. Nam vel magna quis enim tempus dapibus. Nulla facilisi.</p>
-                        <p className="text-lg text-gray-700 dark:text-gray-300">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut ut ex at lorem tristique lacinia. Vestibulum id massa in nisi consectetur bibendum non at ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse potenti. Curabitur pulvinar posuere odio, eget ultricies libero consequat ac. Sed auctor, est quis iaculis tincidunt, mi nisi laoreet elit, at convallis risus sem nec libero. Phasellus ut venenatis nibh, eu tempor nunc. Vivamus in ex id nisl vehicula congue a sit amet erat. Vivamus aliquet eleifend libero, vel consequat nisi gravida ut.</p>
+            <footer className="bg-white rounded-lg shadow dark:bg-gray-900 m-4 absolute bottom-0 w-full">
+                <div className="max-w-screen-xl mx-auto p-4 md:py-8">
+                    <div className="sm:flex sm:items-center sm:justify-between">
+                        <a href="https://amela.vn/" className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
+                            Amela
+                        </a>
+                        <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+                            <li>
+                                <a href="#" className="hover:underline me-4 md:me-6">About</a>
+                            </li>
+                            <li>
+                                <a href="#" className="hover:underline me-4 md:me-6">Privacy Policy</a>
+                            </li>
+                            <li>
+                                <a href="#" className="hover:underline me-4 md:me-6">Licensing</a>
+                            </li>
+                            <li>
+                                <a href="#" className="hover:underline">Contact</a>
+                            </li>
+                        </ul>
                     </div>
-                </main>
-
-                <footer className="bg-white rounded-lg shadow dark:bg-gray-900 m-4 absolute bottom-0 w-full">
-                    <div className="max-w-screen-xl mx-auto p-4 md:py-8">
-                        <div className="sm:flex sm:items-center sm:justify-between">
-                            <a href="https://flowbite.com/" className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
-                            </a>
-                            <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
-                                <li>
-                                    <a href="#" className="hover:underline me-4 md:me-6">About</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="hover:underline me-4 md:me-6">Privacy Policy</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="hover:underline me-4 md:me-6">Licensing</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="hover:underline">Contact</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="https://amela.vn/" className="hover:underline">Amela</a>. All Rights Reserved.</span>
-                    </div>
-                </footer>
-            </div>
+                    <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="https://amela.vn/" className="hover:underline">Amela</a>. All Rights Reserved.</span>
+                </div>
+            </footer>
         </>
     );
 }

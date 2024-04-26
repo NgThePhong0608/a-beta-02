@@ -1,60 +1,47 @@
-import {useEffect, useState} from 'react';
+import { useState } from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import {Link} from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 
-export default function Authenticated({user, header, children}) {
-    useEffect(() => {
-        console.log(user)
-    })
+
+export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
             <nav className="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
-                            <div className="shrink-0 flex items-center">
+                            <div className="flex items-center flex-shrink-0">
                                 <Link href="/">
-                                    <ApplicationLogo
-                                        className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200"/>
+                                    <a className="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80" href="#" aria-label="Amela">
+                                        <img className="h-20 w-auto" src="https://static.vecteezy.com/system/resources/previews/007/263/716/non_2x/hrm-letter-logo-design-on-white-background-hrm-creative-initials-letter-logo-concept-hrm-letter-design-vector.jpg" alt="AMELA Technology" decoding="async"></img>
+                                    </a>
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <div className="hidden sm:flex sm:space-x-8 sm:ml-10">
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
                                 </NavLink>
-                            </div>
-
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink href={route('employee.index')} active={route().current('employee.index')}>
-                                    Employees
+                                    Employee
                                 </NavLink>
-                            </div>
-
-                            {
-                                user.role === 'admin' ? (
-                                    <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                        <NavLink href={route('timesheet.index')}
-                                                 active={route().current('timesheet.index')}>
+                                {
+                                    user.role === 'admin' ? (
+                                        <NavLink href={route('timesheet.index')} active={route().current('timesheet.index')}>
                                             Timesheet
                                         </NavLink>
-                                    </div>
-                                ) : (
-                                    <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                        <NavLink href={route('checkin')}
-                                                 active={route().current('checkin')}>
-                                            <button>
-                                                Checkin
-                                            </button>
+                                    ) : (
+                                        <NavLink href={route('checkin')} active={route().current('checkin')}>
+                                            Attendance
                                         </NavLink>
-                                    </div>
-                                )
-                            }
+                                    )
+                                }
+                            </div>
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ms-6">
@@ -66,8 +53,11 @@ export default function Authenticated({user, header, children}) {
                                                 type="button"
                                                 className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
                                             >
-                                                {user.name}
-
+                                                <div>
+                                                    <div className="text-sm font-medium text-gray-900">{user.name}</div>
+                                                    <div className="text-xs text-gray-500">{user.email}</div>
+                                                </div>
+                                                <img className="w-10 h-10 rounded-full m-4" src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/32/32adf411d0fa815203c5ac140ca4ee4046211cd1.jpg" alt="" />
                                                 <svg
                                                     className="ms-2 -me-0.5 h-4 w-4"
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -125,6 +115,24 @@ export default function Authenticated({user, header, children}) {
                         <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('employee.index')} active={route().current('employee.index')}>
+                            Employee
+                        </ResponsiveNavLink>
+                        {
+                            user.role === 'admin' ? (
+                                <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                    <ResponsiveNavLink href={route('timesheet.index')} active={route().current('timesheet.index')}>
+                                        Timesheet
+                                    </ResponsiveNavLink>
+                                </div>
+                            ) : (
+                                <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                    <ResponsiveNavLink href={route('checkin')} active={route().current('checkin')}>
+                                        Attendance
+                                    </ResponsiveNavLink>
+                                </div>
+                            )
+                        }
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
