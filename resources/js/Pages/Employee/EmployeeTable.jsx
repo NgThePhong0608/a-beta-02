@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import TableHeading from "@/Components/TableHeading";
 import {Link, router} from "@inertiajs/react";
 import Pagination from "@/Components/Pagination";
@@ -7,6 +7,18 @@ import SelectInput from "@/Components/SelectInput";
 
 const EmployeeTable = ({auth, employees, queryParams = null, success}) => {
     queryParams = queryParams || {};
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredTimesheetData, setFilteredTimesheetData] = useState([]);
+
+    useEffect(() => {
+        const lowerCaseQuery = searchQuery.toLowerCase();
+        const filteredData = employees.data.filter((employee) => {
+            return (
+                employee?.user?.email.toLowerCase().includes(lowerCaseQuery)
+            );
+        });
+        setFilteredTimesheetData(filteredData);
+    }, [searchQuery, employees.data]);
 
     const searchFieldChanged = (name, value) => {
         if (value) {
@@ -47,6 +59,10 @@ const EmployeeTable = ({auth, employees, queryParams = null, success}) => {
 
     const checkRole = (auth) => {
         return auth.user.role === "admin";
+    };
+
+    const handleSearchInputChange = (e) => {
+        setSearchQuery(e.target.value);
     };
     return (
         <>
@@ -144,8 +160,10 @@ const EmployeeTable = ({auth, employees, queryParams = null, success}) => {
                                 className="w-full"
                                 defaultValue={queryParams.search}
                                 placeholder="Type to search"
+                                value={searchQuery}
                                 onBlur={(e) => searchFieldChanged("search", e.target.value)}
                                 onKeyPress={(e) => onKeyPress("search", e)}
+                                onChange={handleSearchInputChange}
                             />
                         </th>
                         <th className="px-3 py-3"></th>
@@ -170,7 +188,7 @@ const EmployeeTable = ({auth, employees, queryParams = null, success}) => {
                     </tr>
                     </thead>
                     <tbody>
-                    {employees.data.map((employee) => (
+                    {filteredTimesheetData.map((employee) => (
                         <tr
                             className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                             key={employee.id}
