@@ -28,7 +28,7 @@ class EmployeeController extends Controller
         $sortDirection = request("sort_direction", "desc");
 
         $employees = $query->orderBy($sortField, $sortDirection)
-            ->search($query, request("search"))
+            ->search($query)
             ->paginate(10)
             ->onEachSide(1);
 

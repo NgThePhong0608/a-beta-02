@@ -8,17 +8,17 @@ import SelectInput from "@/Components/SelectInput";
 const EmployeeTable = ({auth, employees, queryParams = null, success}) => {
     queryParams = queryParams || {};
     const [searchQuery, setSearchQuery] = useState('');
-    const [filteredTimesheetData, setFilteredTimesheetData] = useState([]);
+    // const [filteredTimesheetData, setFilteredTimesheetData] = useState([]);
 
-    useEffect(() => {
-        const lowerCaseQuery = searchQuery.toLowerCase();
-        const filteredData = employees.data.filter((employee) => {
-            return (
-                employee?.user?.email.toLowerCase().includes(lowerCaseQuery)
-            );
-        });
-        setFilteredTimesheetData(filteredData);
-    }, [searchQuery, employees.data]);
+    // useEffect(() => {
+    //     const lowerCaseQuery = searchQuery.toLowerCase();
+    //     const filteredData = employees.data.filter((employee) => {
+    //         return (
+    //             employee?.user?.email.toLowerCase().includes(lowerCaseQuery)
+    //         );
+    //     });
+    //     setFilteredTimesheetData(filteredData);
+    // }, [searchQuery, employees.data]);
 
     const searchFieldChanged = (name, value) => {
         if (value) {
@@ -188,7 +188,7 @@ const EmployeeTable = ({auth, employees, queryParams = null, success}) => {
                     </tr>
                     </thead>
                     <tbody>
-                    {filteredTimesheetData.map((employee) => (
+                    {employees.data.map((employee) => (
                         <tr
                             className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                             key={employee.id}

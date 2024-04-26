@@ -27,17 +27,18 @@ class TimeSheet extends Model
     }
 
     // local scope
-
     public function scopeFilter($query)
     {
-//        $query->when(request('search') ?? false, function ($query, $search) {
-//            return $query->where(function ($query) use ($search) {
-//                $query->where('date', 'like', '%' . $search . '%')
-//                    ->orWhere('time_in', 'like', '%' . $search . '%')
-//                    ->orWhere('time_out', 'like', '%' . $search . '%')
-//                    ->orWhere('duration', 'like', '%' . $search . '%');
-//            });
-//        });
-        Employee::query()->where('fullname', 'like', '%' . request('search') . '%');
+        $query->when(request('search') ?? false, function ($query, $search) {
+            return $query->where(function ($query) use ($search) {
+                $query->where('date', 'like', '%' . $search . '%')
+                    ->orWhereHas('employee', function ($query) use ($search) {
+                        $query->where('fullname', 'like', '%' . $search . '%');
+                    })
+                    ->orWhere('time_in', 'like', '%' . $search . '%')
+                    ->orWhere('time_out', 'like', '%' . $search . '%')
+                    ->orWhere('duration', 'like', '%' . $search . '%');
+            });
+        });
     }
 }
