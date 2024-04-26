@@ -35,14 +35,14 @@ class Employee extends Model
 
     // local scope
 
-    public function scopeSearch($query, $search)
+    public function scopeSearch($query)
     {
         if (request("fullname")) {
             $query->where("fullname", "like", "%" . request("fullname") . "%");
         }
-//        if (request("email")) {
-//            $user->where("email", "like", "%" . request("email") . "%");
-//        }
+
+
+
         if (request("department")){
             $query->where("department", "like", "%" . request("department") . "%");
         }
@@ -55,6 +55,11 @@ class Employee extends Model
                 ->orWhere('address', 'like', '%' . \request('search') . '%')
                 ->orWhere('age', 'like', '%' . \request('search') . '%');
         }
+
+//        $query = User::query();
+//        if (request('email')){
+//            $query->where('email', 'like', '%' . request('email') . '%');
+//        }
         return $query;
     }
 }

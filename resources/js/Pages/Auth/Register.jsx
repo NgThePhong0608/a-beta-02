@@ -1,13 +1,12 @@
-import { useEffect } from 'react';
-import GuestLayout from '@/Layouts/GuestLayout';
+import {useEffect} from 'react';
 import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
+import {Head, Link, useForm} from '@inertiajs/react';
+import {Typography,} from "@material-tailwind/react";
 
 export default function Register() {
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const {data, setData, post, processing, errors, reset} = useForm({
         name: '',
         email: '',
         password: '',
@@ -27,91 +26,111 @@ export default function Register() {
     };
 
     return (
-        <GuestLayout>
-            <Head title="Register" />
-
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="name" value="Name" />
-
-                    <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        onChange={(e) => setData('name', e.target.value)}
-                        required
+        <>
+            <Head title="Register"/>
+            <section className="m-5 flex">
+                <div className="w-2/5 h-full hidden lg:block">
+                    <img
+                        src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+                        className="max-h-full max-w-full object-center rounded-3xl"
                     />
-
-                    <InputError message={errors.name} className="mt-2" />
                 </div>
+                <div className="w-full lg:w-3/5 flex flex-col items-center justify-center">
+                    <div className="text-center">
+                        <Typography variant="h2" className="font-extrabold mb-4 text-3xl">Join Us Today</Typography>
+                        <Typography variant="paragraph" color="blue-gray" className="text-lg font-normal">Enter your
+                            email and password to register.</Typography>
+                    </div>
+                    <form onSubmit={submit} className="mt-5 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2">
+                        <div className="mb-1 flex flex-col gap-6">
+                            <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
+                                Your name
+                            </Typography>
+                            <div>
+                                <TextInput
+                                    id="name"
+                                    name="name"
+                                    value={data.name}
+                                    className="mt-1 block w-full"
+                                    autoComplete="name"
+                                    isFocused={true}
+                                    onChange={(e) => setData('name', e.target.value)}
+                                    required
+                                />
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
+                                <InputError message={errors.name} className="mt-2"/>
+                            </div>
 
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)}
-                        required
-                    />
+                            <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
+                                Your email
+                            </Typography>
+                            <div>
+                                <TextInput
+                                    id="email"
+                                    name="email"
+                                    value={data.email}
+                                    className="mt-1 block w-full"
+                                    autoComplete="email"
+                                    isFocused={true}
+                                    onChange={(e) => setData('email', e.target.value)}
+                                    required
+                                />
 
-                    <InputError message={errors.email} className="mt-2" />
+                                <InputError message={errors.name} className="mt-2"/>
+                            </div>
+
+                            <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
+                                Password
+                            </Typography>
+                            <div>
+
+                                <TextInput
+                                    id="password"
+                                    type="password"
+                                    name="password"
+                                    value={data.password}
+                                    className="mt-1 block w-full"
+                                    autoComplete="new-password"
+                                    onChange={(e) => setData('password', e.target.value)}
+                                    required
+                                />
+
+                                <InputError message={errors.password} className="mt-2"/>
+                            </div>
+                            <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
+                                Confirm Password
+                            </Typography>
+                            <div>
+                                <TextInput
+                                    id="password_confirmation"
+                                    type="password"
+                                    name="password_confirmation"
+                                    value={data.password_confirmation}
+                                    className="mt-1 block w-full"
+                                    autoComplete="new-password"
+                                    onChange={(e) => setData('password_confirmation', e.target.value)}
+                                    required
+                                />
+
+                                <InputError message={errors.password_confirmation} className="mt-2"/>
+                            </div>
+                        </div>
+                        <PrimaryButton className="mt-6 w-full flex text-center justify-center">
+                            Register Now
+                        </PrimaryButton>
+                        <Typography variant="paragraph" className="text-center text-blue-gray-500 font-medium mt-4">
+                            Already have an account?
+                            <Link
+                                href={route('login')}
+                                className={"text-gray-900 ml-1"}
+                            >
+                                Sign in
+                            </Link>
+                        </Typography>
+                    </form>
+
                 </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
-
-                    <TextInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password_confirmation', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.password_confirmation} className="mt-2" />
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    <Link
-                        href={route('login')}
-                        className="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                    >
-                        Already registered?
-                    </Link>
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
-                </div>
-            </form>
-        </GuestLayout>
+            </section>
+        </>
     );
 }

@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('fullname');
-            $table->integer('age');
-            $table->string('phone');
-            $table->string('address');
-            $table->string('city');
-            $table->string('country');
-            $table->string('department');
+            $table->integer('age')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('country')->nullable();
+            $table->string('department')->nullable();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
