@@ -21,6 +21,7 @@ class TimeSheetResource extends JsonResource
             'time_in' => $this->time_in,
             'time_out' => $this->time_out,
             'duration' => $this->duration,
+            'status' => $this->status,
             'employee' => new EmployeeResource($this->employee),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

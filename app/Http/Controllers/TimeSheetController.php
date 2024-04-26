@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\TimeSheetResource;
 use App\Models\TimeSheet;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Type\Time;
 
 class TimeSheetController extends Controller
 {
@@ -14,16 +15,18 @@ class TimeSheetController extends Controller
     public function index()
     {
         $query = TimeSheet::query()->with('employee');
-        $sortField = request('sort_field', 'created_at');
+        $sortField = request('sort_field', 'date');
         $sortDirection = request('sort_direction', 'asc');
 
 
-        $timesheets = $query->orderBy($sortField, $sortDirection)
+        $timesheet = $query->orderBy($sortField, $sortDirection)
+            ->filter($query,request('search'))
             ->paginate(10)
             ->onEachSide(1);
 
         return inertia('TimeSheet/Index', [
-            'timesheets' => TimeSheetResource::collection($timesheets),
+            'timesheet' => TimeSheetResource::collection($timesheet),
+            'queryParams' => request()->query() ?: null,
             'success' => session('success'),
         ]);
     }
@@ -31,17 +34,42 @@ class TimeSheetController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(TimeSheet $timeSheet)
+    public function show(string $id)
     {
-        //
+        $timeSheet = TimeSheet::query()->findOrFail($id);
+        return inertia('TimeSheet/Show', [
+            'timeSheet' => new TimeSheetResource($timeSheet),
+        ]);
+    }
+
+    public function edit(string $id)
+    {
+        $timeSheet = TimeSheet::query()->findOrFail($id);
+        return inertia('TimeSheet/Edit', [
+            'timeSheet' => new TimeSheetResource($timeSheet),
+        ]);
+    }
+    public function update(Request $request, string $id)
+    {
+        $timeSheet = TimeSheet::query()->findOrFail($id);
+        $data = $request->validate([
+            'date' => 'required',
+            'time_in' => 'required',
+            'time_out' => 'required',
+            'duration' => 'required',
+        ]);
+        $timeSheet->update($data);
+        return redirect()->route('timesheet.index')->with('success', 'TimeSheet updated.');
     }
 
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TimeSheet $timeSheet)
+    public function destroy(string $id)
     {
-        //
+        $timeSheet = TimeSheet::query()->findOrFail($id);
+        $timeSheet->delete();
+        return redirect()->route('timesheet.index')->with('success', 'TimeSheet deleted.');
     }
 }
