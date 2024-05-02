@@ -31,9 +31,8 @@ class EmployeeController extends Controller
             ->search($query)
             ->paginate(10)
             ->onEachSide(1);
-
         return inertia("Employee/Index", [
-            "employees" => EmployeeResource::collection($employees),
+            'employees' => EmployeeResource::collection($employees),
             'queryParams' => request()->query() ?: null,
             'success' => session('success'),
         ]);
@@ -145,9 +144,9 @@ class EmployeeController extends Controller
     public function verifyUser($token)
     {
         $verifyUser = VerifyUser::where('token', $token)->first();
-        if(isset($verifyUser) ){
+        if (isset($verifyUser)) {
             $user = $verifyUser->user;
-            if(!$user->verified) {
+            if (!$user->verified) {
                 $verifyUser->user->email_verified_at = now();
                 $verifyUser->user->save();
                 auth()->login($verifyUser->user);

@@ -4,8 +4,8 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
     return (
         <>
             <Head title="Welcome" />
-            <header class="flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full py-7">
-                <nav class="relative max-w-7xl w-full flex flex-wrap md:grid md:grid-cols-12 basis-full items-center px-4 md:px-6 md:px-8 mx-auto" aria-label="Global">
+            <header className="flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full py-7">
+                <nav class="relative max-w-7xl w-full flex flex-wrap md:grid md:grid-cols-12 basis-full items-center px-4 md:px-8 mx-auto" aria-label="Global">
                     <div class="md:col-span-3">
                         <a class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80" href="#" aria-label="Amela">
                             <img className="h-20 w-auto" src="https://static.vecteezy.com/system/resources/previews/007/263/716/non_2x/hrm-letter-logo-design-on-white-background-hrm-creative-initials-letter-logo-concept-hrm-letter-design-vector.jpg" alt="AMELA Technology" decoding="async"></img>
@@ -66,7 +66,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     </div>
                 </nav>
             </header>
-            
+
             <main className="min-h-screen">
                 <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-12">
                     <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Welcome to Our Website</h1>
