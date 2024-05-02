@@ -37,6 +37,9 @@ class Employee extends Model
 
     public function scopeSearch($query)
     {
+        if (request('department')){
+            $query->where('department', 'like', '%' . \request('department') . '%');
+        }
         if (request('search')) {
             $query->where('fullname', 'like', '%' . \request('search') . '%')
                 ->orWhere('phone', 'like', '%' . \request('search') . '%')
