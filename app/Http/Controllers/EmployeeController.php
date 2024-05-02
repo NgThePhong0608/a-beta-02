@@ -75,6 +75,8 @@ class EmployeeController extends Controller
             'token' => sha1(time()),
         ]);
 
+        $verifyUser->save();
+
         Mail::to($user->email)->send(new VerifyMail($user));
 
         return redirect()->route('employee.index')->with(
@@ -137,8 +139,8 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
+        $employee->user->delete();
         $employee->delete();
-
         return redirect()->route('employee.index')->with('success', 'Employee deleted.');
     }
     public function verifyUser($token)
