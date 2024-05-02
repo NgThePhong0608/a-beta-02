@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,6 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -51,5 +53,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function verifyUser()
     {
         return $this->hasOne(VerifyUser::class, 'user_id', 'id');
+    }
+
+    public function scopeSearch(Builder $query)
+    {
+        if (request('search')){
+            $query->where('name', 'like', '%' . request('search') . '%')
+                ->orWhere('email', 'like', '%' . request('search') . '%');
+        }
     }
 }

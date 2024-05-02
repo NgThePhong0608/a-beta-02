@@ -1,12 +1,11 @@
-import { useState } from 'react';
-import ApplicationLogo from '@/Components/ApplicationLogo';
+import {useState} from 'react';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
+import {Link} from '@inertiajs/react';
 
 
-export default function Authenticated({ user, header, children }) {
+export default function Authenticated({user, header, children}) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
@@ -17,8 +16,11 @@ export default function Authenticated({ user, header, children }) {
                         <div className="flex">
                             <div className="flex items-center flex-shrink-0">
                                 <Link href="/">
-                                    <a className="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80" href="#" aria-label="Amela">
-                                        <img className="h-20 w-auto" src="https://static.vecteezy.com/system/resources/previews/007/263/716/non_2x/hrm-letter-logo-design-on-white-background-hrm-creative-initials-letter-logo-concept-hrm-letter-design-vector.jpg" alt="AMELA Technology" decoding="async"></img>
+                                    <a className="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
+                                       href="#" aria-label="Amela">
+                                        <img className="h-20 w-auto"
+                                             src="https://static.vecteezy.com/system/resources/previews/007/263/716/non_2x/hrm-letter-logo-design-on-white-background-hrm-creative-initials-letter-logo-concept-hrm-letter-design-vector.jpg"
+                                             alt="AMELA Technology" decoding="async"></img>
                                     </a>
                                 </Link>
                             </div>
@@ -27,14 +29,22 @@ export default function Authenticated({ user, header, children }) {
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
                                 </NavLink>
+
                                 <NavLink href={route('employee.index')} active={route().current('employee.index')}>
                                     Employee
                                 </NavLink>
                                 {
                                     user.role === 'admin' ? (
-                                        <NavLink href={route('timesheet.index')} active={route().current('timesheet.index')}>
-                                            Timesheet
-                                        </NavLink>
+                                        <>
+                                            <NavLink href={route('account.index')}
+                                                     active={route().current('account.index')}>
+                                                Account
+                                            </NavLink>
+                                            <NavLink href={route('timesheet.index')}
+                                                     active={route().current('timesheet.index')}>
+                                                Timesheet
+                                            </NavLink>
+                                        </>
                                     ) : (
                                         <NavLink href={route('checkin')} active={route().current('checkin')}>
                                             Attendance
@@ -57,7 +67,9 @@ export default function Authenticated({ user, header, children }) {
                                                     <div className="text-sm font-medium text-gray-900">{user.name}</div>
                                                     <div className="text-xs text-gray-500">{user.email}</div>
                                                 </div>
-                                                <img className="w-10 h-10 rounded-full m-4" src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/32/32adf411d0fa815203c5ac140ca4ee4046211cd1.jpg" alt="" />
+                                                <img className="w-10 h-10 rounded-full m-4"
+                                                     src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/32/32adf411d0fa815203c5ac140ca4ee4046211cd1.jpg"
+                                                     alt=""/>
                                                 <svg
                                                     className="ms-2 -me-0.5 h-4 w-4"
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -121,7 +133,8 @@ export default function Authenticated({ user, header, children }) {
                         {
                             user.role === 'admin' ? (
                                 <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                    <ResponsiveNavLink href={route('timesheet.index')} active={route().current('timesheet.index')}>
+                                    <ResponsiveNavLink href={route('timesheet.index')}
+                                                       active={route().current('timesheet.index')}>
                                         Timesheet
                                     </ResponsiveNavLink>
                                 </div>

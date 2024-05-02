@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TimeSheetController;
 use App\Http\Controllers\CheckinController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\AccountController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -40,6 +41,7 @@ Route::get('/user/verify/{token}', [EmployeeController::class, 'verifyUser'])->n
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('employee', EmployeeController::class);
     Route::resource('timesheet', TimeSheetController::class);
+    Route::resource('account', AccountController::class);
 
     Route::get('/checkin', [CheckinController::class, 'create'])->name('checkin');
     Route::post('/checkin', [CheckinController::class, 'store'])->name('checkin.store');
