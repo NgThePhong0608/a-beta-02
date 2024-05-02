@@ -3,13 +3,9 @@ import TableHeading from "@/Components/TableHeading";
 import {Link, router} from "@inertiajs/react";
 import Pagination from "@/Components/Pagination";
 import TextInput from "@/Components/TextInput";
-import SelectInput from "@/Components/SelectInput";
 
-const EmployeeTable = ({auth, employees, queryParams = null, success}) => {
+const AccountTable = ({auth, accounts, queryParams = null, success}) => {
     queryParams = queryParams || {};
-    useEffect(() => {
-        console.log(queryParams);
-    }, []);
     const [searchQuery, setSearchQuery] = useState('');
     const searchFieldChanged = (name, value) => {
         if (value) {
@@ -38,14 +34,14 @@ const EmployeeTable = ({auth, employees, queryParams = null, success}) => {
             queryParams.sort_field = name;
             queryParams.sort_direction = "asc";
         }
-        router.get(route("employee.index", queryParams));
+        router.get(route("account.index", queryParams));
     };
 
-    const deleteEmployee = (employee) => {
-        if (!window.confirm("Are you sure you want to delete the employee?")) {
+    const deleteAccount = (account) => {
+        if (!window.confirm("Are you sure you want to delete the account?")) {
             return;
         }
-        router.delete(route("employee.destroy", employee.id));
+        router.delete(route("account.destroy", account.id));
     };
 
     const checkRole = (auth) => {
@@ -75,56 +71,29 @@ const EmployeeTable = ({auth, employees, queryParams = null, success}) => {
                         >
                             ID
                         </TableHeading>
-                        <th className="px-3 py-3">Image</th>
                         <TableHeading
-                            name="fullname"
+                            name="name"
                             sort_field={queryParams.sort_field}
                             sort_direction={queryParams.sort_direction}
                             sortChanged={sortChanged}
                         >
-                            Name
-                        </TableHeading>
-                        <th className="px-3 py-3">Email</th>
-                        <TableHeading
-                            name="age"
-                            sort_field={queryParams.sort_field}
-                            sort_direction={queryParams.sort_direction}
-                            sortChanged={sortChanged}
-                        >
-                            Age
+                            Username
                         </TableHeading>
                         <TableHeading
-                            name="department"
+                            name="email"
                             sort_field={queryParams.sort_field}
                             sort_direction={queryParams.sort_direction}
                             sortChanged={sortChanged}
                         >
-                            Department
+                            Email
                         </TableHeading>
                         <TableHeading
-                            name="phone"
+                            name="role"
                             sort_field={queryParams.sort_field}
                             sort_direction={queryParams.sort_direction}
                             sortChanged={sortChanged}
                         >
-                            Phone
-                        </TableHeading>
-                        <th className="px-3 py-2">Address</th>
-                        <TableHeading
-                            name="city"
-                            sort_field={queryParams.sort_field}
-                            sort_direction={queryParams.sort_direction}
-                            sortChanged={sortChanged}
-                        >
-                            City
-                        </TableHeading>
-                        <TableHeading
-                            name="country"
-                            sort_field={queryParams.sort_field}
-                            sort_direction={queryParams.sort_direction}
-                            sortChanged={sortChanged}
-                        >
-                            Country
+                            Role
                         </TableHeading>
                         <TableHeading
                             name="created_at"
@@ -132,10 +101,10 @@ const EmployeeTable = ({auth, employees, queryParams = null, success}) => {
                             sort_direction={queryParams.sort_direction}
                             sortChanged={sortChanged}
                         >
-                            Create Date
+                            Created at
                         </TableHeading>
                         {checkRole(auth) && (
-                            <th className="px-3 py-2 text-right">
+                            <th className="px-3 py-2 text-center">
                                 Actions
                             </th>
                         )}
@@ -145,12 +114,12 @@ const EmployeeTable = ({auth, employees, queryParams = null, success}) => {
                         className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
                     <tr className="text-nowrap">
                         <th className="px-3 py-3"></th>
-                        <th className="px-3 py-3"></th>
-                        <th className="px-5 py-3">
+                        <th className="px-3 py-3">
                             <TextInput
                                 className="w-full"
+                                defaultValue={queryParams.search}
                                 placeholder="Type to search"
-                                value={queryParams.search}
+                                value={searchQuery}
                                 onBlur={(e) => searchFieldChanged("search", e.target.value)}
                                 onKeyPress={(e) => onKeyPress("search", e)}
                                 onChange={handleSearchInputChange}
@@ -158,69 +127,34 @@ const EmployeeTable = ({auth, employees, queryParams = null, success}) => {
                         </th>
                         <th className="px-3 py-3"></th>
                         <th className="px-3 py-3"></th>
-                        <th className="px-3 py-3">
-                            <SelectInput
-                                className="w-full"
-                                defaultValue={queryParams.department}
-                                onChange={(e) => searchFieldChanged("department", e.target.value)}
-                            >
-                                <option value="">Select Department</option>
-                                <option value="HADES">Hades</option>
-                                <option value="FADERLESS">Faderless</option>
-                                <option value="WARRIOR">Warrior</option>
-                                <option value="PHOENIX">Phoenix</option>
-                            </SelectInput>
-                        </th>
-                        <th className="px-3 py-3"></th>
-                        <th className="px-3 py-3"></th>
-                        <th className="px-3 py-3"></th>
-                        <th className="px-3 py-3"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    {employees.data.map((employee) => (
+                    {accounts.data.map((account) => (
                         <tr
                             className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                            key={employee.id}
+                            key={account.id}
                         >
-                            <td className="px-3 py-2">{employee.id}</td>
-                            <td className="px-3 py-2">
-                                <img src={employee.image_url} alt={employee.fullname} />
-                            </td>
+                            <td className="px-3 py-2">{account.id}</td>
                             <th className="px-5 py-3 text-black-100 text-nowrap hover:underline">
-                                <Link href={route("employee.show", employee.id)}>{employee.name}</Link>
+                                <Link href={route("account.show", account.id)}>{account.name}</Link>
                             </th>
-                            <td className="px-3 py-2">{employee.user.email}</td>
-                            <td className="px-3 py-2">{employee.age}</td>
-                            <td className="px-3 py-2">{employee.department}</td>
-                            <td className="px-3 py-2">{employee.phone}</td>
-                            <td className="px-3 py-2">{employee.address}</td>
-                            <td className="px-3 py-2">{employee.city}</td>
-                            <td className="px-3 py-2">{employee.country}</td>
+                            <td className="px-3 py-2">{account.email}</td>
+                            <td className="px-3 py-2">{account.role}</td>
                             <td className="px-3 py-2 text-nowrap">
-                                {new Date(employee.created_at).toLocaleDateString(
-                                    'en-US', {
-                                        year: 'numeric',
-                                        month: '2-digit',
-                                        day: '2-digit',
-                                        hour: '2-digit',
-                                        minute: '2-digit',
-                                        second: '2-digit',
-                                        hour12: false
-                                    }
-                                )}
+                                {account.created_at}
                             </td>
                             {
                                 checkRole(auth) && (
-                                    <td className="px-3 py-2 text-nowrap">
+                                    <td className="px-3 py-2 text-nowrap text-center">
                                         <Link
-                                            href={route("employee.edit", employee.id)}
+                                            href={route("account.edit", account.id)}
                                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1"
                                         >
                                             Edit
                                         </Link>
                                         <button
-                                            onClick={(e) => deleteEmployee(employee)}
+                                            onClick={(e) => deleteAccount(account)}
                                             className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1"
                                         >
                                             Delete
@@ -233,9 +167,9 @@ const EmployeeTable = ({auth, employees, queryParams = null, success}) => {
                     </tbody>
                 </table>
             </div>
-            <Pagination links={employees.meta.links}/>
+            <Pagination links={accounts.meta.links}/>
         </>
     );
 };
 
-export default EmployeeTable;
+export default AccountTable;
