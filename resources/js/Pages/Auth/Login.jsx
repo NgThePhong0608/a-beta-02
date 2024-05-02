@@ -6,6 +6,7 @@ import Checkbox from "@/Components/Checkbox.jsx";
 import TextInput from "@/Components/TextInput.jsx";
 import InputError from "@/Components/InputError.jsx";
 import PrimaryButton from "@/Components/PrimaryButton.jsx";
+import Footer from "@/Components/Footer.jsx";
 
 export default function Login({status, canResetPassword}) {
     const {data, setData, post, processing, errors, reset} = useForm({
@@ -29,7 +30,7 @@ export default function Login({status, canResetPassword}) {
         <>
             <Head title="Log in"/>
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
-            <section className="m-8 flex gap-4">
+            <div className="m-8 flex gap-4">
                 <div className="w-full lg:w-3/5 mt-24">
                     <div className="text-center">
                         <Typography variant="h2" className="font-extrabold mb-4 text-3xl">Sign In</Typography>
@@ -114,7 +115,9 @@ export default function Login({status, canResetPassword}) {
                         className="max-h-full max-w-full object-center rounded-3xl"
                     />
                 </div>
-            </section>
+            </div>
+
+            <Footer />
         </>
     );
 }

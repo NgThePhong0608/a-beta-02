@@ -3,6 +3,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import {Head, useForm} from '@inertiajs/react';
 import {Typography} from "@material-tailwind/react";
+import Footer from "@/Components/Footer.jsx";
 
 export default function ForgotPassword({status}) {
     const {data, setData, post, processing, errors} = useForm({
@@ -48,7 +49,7 @@ export default function ForgotPassword({status}) {
                         <div className="flex items-center justify-end mt-4">
                             <PrimaryButton className="mt-6 w-full flex text-center justify-center"
                                            disabled={processing}>
-                                Email Password Reset Link
+                                Send
                             </PrimaryButton>
                         </div>
                     </form>
@@ -60,6 +61,7 @@ export default function ForgotPassword({status}) {
                     />
                 </div>
             </section>
+            <Footer />
         </>
     )
         ;

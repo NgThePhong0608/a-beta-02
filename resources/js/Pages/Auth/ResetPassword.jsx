@@ -6,6 +6,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import {Head, Link, useForm} from '@inertiajs/react';
 import {Typography} from "@material-tailwind/react";
+import Footer from "@/Components/Footer.jsx";
 
 export default function ResetPassword({ token, email }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -115,6 +116,8 @@ export default function ResetPassword({ token, email }) {
                     </form>
                 </div>
             </section>
+
+            <Footer />
         </>
     );
 }

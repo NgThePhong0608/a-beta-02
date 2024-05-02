@@ -1,6 +1,6 @@
 import { Link, Head } from '@inertiajs/react';
-
-export default function Welcome({ auth, laravelVersion, phpVersion }) {
+import Footer from "@/Components/Footer.jsx";
+export default function Welcome({ auth }) {
     return (
         <>
             <Head title="Welcome" />
@@ -62,12 +62,12 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         </div>
                     </div>
 
-                    <div id="navbar-collapse-with-animation" class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow md:block md:w-auto md:basis-auto md:order-2 md:col-span-6">
+                    <div id="navbar-collapse-with-animation" className="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow md:block md:w-auto md:basis-auto md:order-2 md:col-span-6">
                     </div>
                 </nav>
             </header>
 
-            <main className="min-h-screen">
+            <main>
                 <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-12">
                     <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Welcome to Our Website</h1>
                     <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget libero nec dui vestibulum aliquam ac et velit. Fusce scelerisque eros eu lectus facilisis, in malesuada urna tincidunt. Integer rutrum est non aliquet pharetra. Duis in faucibus mauris. Cras feugiat dui nec semper sagittis. Proin pretium, purus id varius luctus, nisl tortor volutpat felis, a euismod enim purus sit amet purus. Vivamus et libero nec urna accumsan consequat. Quisque sed libero odio. Donec tristique nisi vel libero dictum, vel bibendum eros vulputate. Proin efficitur a odio at lobortis. Suspendisse potenti. Morbi lobortis urna id ante egestas, et eleifend libero pulvinar. Sed ac felis ut urna placerat luctus. Nulla a erat in elit consectetur tincidunt.</p>
@@ -76,30 +76,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                 </div>
             </main>
 
-            <footer className="bg-white rounded-lg shadow dark:bg-gray-900 m-4 absolute bottom-0 w-full">
-                <div className="max-w-screen-xl mx-auto p-4 md:py-8">
-                    <div className="sm:flex sm:items-center sm:justify-between">
-                        <a href="https://amela.vn/" className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
-                            Amela
-                        </a>
-                        <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
-                            <li>
-                                <a href="#" className="hover:underline me-4 md:me-6">About</a>
-                            </li>
-                            <li>
-                                <a href="#" className="hover:underline me-4 md:me-6">Privacy Policy</a>
-                            </li>
-                            <li>
-                                <a href="#" className="hover:underline me-4 md:me-6">Licensing</a>
-                            </li>
-                            <li>
-                                <a href="#" className="hover:underline">Contact</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="https://amela.vn/" className="hover:underline">Amela</a>. All Rights Reserved.</span>
-                </div>
-            </footer>
+            <Footer />
         </>
     );
 }
