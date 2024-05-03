@@ -6,6 +6,7 @@ use App\Events\CreateUserForEmployee;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Http\Resources\EmployeeResource;
+use App\Http\Resources\TimeSheetResource;
 use App\Mail\VerifyMail;
 use App\Models\Employee;
 use App\Models\User;
@@ -92,6 +93,7 @@ class EmployeeController extends Controller
     {
         return inertia("Employee/Show", [
             "employee" => new EmployeeResource($employee),
+            "timeSheets" => TimeSheetResource::collection($employee->timeSheets),
         ]);
     }
 
