@@ -20,7 +20,7 @@ class AccountController extends Controller
     {
         $query = User::query();
         $sortField = request("sort_field", 'name');
-        $sortDirection = request("sort_direction", "desc");
+        $sortDirection = request("sort_direction", "asc");
         $accounts = $query->orderBy($sortField, $sortDirection)
             ->search($query, \request('search'))
             ->paginate(10)
