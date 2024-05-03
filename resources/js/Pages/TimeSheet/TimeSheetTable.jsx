@@ -119,7 +119,7 @@ export const TimeSheetTable = ({ auth, timesheet, success, queryParams = null })
                                 className="w-full"
                                 defaultValue={queryParams.search}
                                 placeholder="Type to search"
-                                value={searchQuery}
+                                // value={queryParams.search}
                                 onBlur={(e) => searchFieldChanged("search", e.target.value)}
                                 onKeyPress={(e) => onKeyPress("search", e)}
                                 onChange={(e) => handleSearchInputChange(e)}

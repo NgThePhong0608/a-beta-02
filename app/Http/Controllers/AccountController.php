@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\CreateUserForEmployee;
 use App\Http\Resources\AccountResource;
 use App\Mail\VerifyMail;
 use App\Models\Employee;
@@ -19,7 +18,13 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $accounts = User::query()->search()->paginate(10)->onEachSide(1);
+        $query = User::query();
+        $sortField = request("sort_field", 'name');
+        $sortDirection = request("sort_direction", "desc");
+        $accounts = $query->orderBy($sortField, $sortDirection)
+            ->search($query, \request('search'))
+            ->paginate(10)
+            ->onEachSide(1);
         return inertia('Account/Index', [
             'accounts' => AccountResource::collection($accounts),
             'queryParams' => request()->all(),
@@ -43,17 +48,22 @@ class AccountController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
+            'role' => 'required|in:employee,admin',
             'password' => 'required|min:8|max:255|confirmed',
         ]);
         $user = User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
+            'role' => $validatedData['role'],
         ]);
-        Employee::create([
-            'user_id' => $user->id,
-            'fullname' => $user->name,
-        ]);
+
+        if ($validatedData['role'] === 'employee') {
+            Employee::create([
+                'user_id' => $user->id,
+                'fullname' => $user->name,
+            ]);
+        }
 
         $verifyUser = VerifyUser::create([
             'user_id' => $user->id,
@@ -63,7 +73,7 @@ class AccountController extends Controller
         $verifyUser->save();
 
         Mail::to($user->email)->send(new VerifyMail($user));
-        return redirect()->route('account.index')->with('success', 'Account created successfully');
+        return redirect()->route('account.index')->with('success', 'Account created successfully and a verification email has been sent to email: ' . $user->email);
     }
 
     /**

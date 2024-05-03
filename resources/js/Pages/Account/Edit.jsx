@@ -11,6 +11,7 @@ const Edit = ({ auth, account }) => {
     const { data, setData, post, errors, reset } = useForm({
         name: account.name || "",
         email: account.email || "",
+        role: account.role || "",
         password: "",
         password_confirmation: "",
         _method: "PUT",
@@ -72,6 +73,30 @@ const Edit = ({ auth, account }) => {
                                     />
 
                                     <InputError message={errors.email} className="mt-2" />
+                                </div>
+
+                                <div className="mt-4">
+                                    <InputLabel
+                                        htmlFor="role"
+                                        value="Role"
+                                    />
+
+                                    <SelectInput
+                                        name="role"
+                                        id="role"
+                                        className="mt-1 block w-full"
+                                        defaultValue={data.role}
+                                        onChange={(e) => setData("role", e.target.value)}
+                                    >
+                                        <option value="">Select Role</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="employee">Employee</option>
+                                    </SelectInput>
+
+                                    <InputError
+                                        message={errors.role}
+                                        className="mt-2"
+                                    />
                                 </div>
 
                                 <div className="mt-4">
