@@ -4,6 +4,28 @@ import React, {useEffect, useState} from "react";
 import 'react-toastify/dist/ReactToastify.css';
 
 const Create = ({auth, success, time_in}) => {
+    const [timeWorked, setTimeWorked] = useState('');
+
+    // Calculate time worked
+    useEffect(() => {
+        const timeIn = convertToDateTime(time_in);
+        const timeOut = new Date();
+
+        const millisecondsWorked = timeOut - timeIn;
+
+        const hoursWorked = Math.floor(millisecondsWorked / (1000 * 60 * 60));
+        const minutesWorked = Math.floor((millisecondsWorked % (1000 * 60 * 60)) / (1000 * 60));
+        const secondsWorked = Math.floor((millisecondsWorked % (1000 * 60)) / 1000);
+
+        setTimeWorked(`${hoursWorked}h ${minutesWorked}m ${secondsWorked}s`);
+    }, [time_in]);
+
+    const convertToDateTime = (timeString) => {
+        const [hours, minutes, seconds] = timeString.split(':').map(Number);
+        const today = new Date();
+        return new Date(today.getFullYear(), today.getMonth(), today.getDate(), hours, minutes, seconds);
+    };
+
     const time = new Date();
     const formattedTime = [
         ('0' + time.getHours()).slice(-2),
@@ -66,6 +88,10 @@ const Create = ({auth, success, time_in}) => {
                         <div className=" flex items-center justify-center p-6 text-gray-900 dark:text-gray-100">
                             <div
                                 className="max-w-[400px] p-12 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                                <div>
+                                    Time worked: {timeWorked}
+                                </div>
+
                                 <form onSubmit={onSubmit}>
                                     <a href="#">
                                         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Checkout date: {data.date}</h5>
