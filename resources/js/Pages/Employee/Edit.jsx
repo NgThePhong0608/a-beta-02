@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Link, Head, useForm } from "@inertiajs/react";
 import InputLabel from "@/Components/InputLabel";
@@ -10,7 +10,7 @@ const Edit = ({ auth, employee }) => {
 
     const { data, setData, post, errors, reset } = useForm({
         name: employee.user.name || "",
-        image_url: employee.image_url || "",
+        avatar: employee.user.avatar || "",
         email: employee.user.email || "",
         fullname: employee.name || "",
         age: employee.age,
@@ -23,6 +23,10 @@ const Edit = ({ auth, employee }) => {
         department: employee.department || "",
         _method: "PUT",
     });
+
+    useEffect(() => {
+        console.log(data.avatar);
+    }, [data.avatar])
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -51,20 +55,18 @@ const Edit = ({ auth, employee }) => {
                             className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg grid grid-cols-2 gap-4"
                         >
                             <div className="col-span-2 sm:col-span-1">
-
-                                <div className="mt-4">
-                                    <InputLabel
-                                        htmlFor="image_url"
-                                        value={"Employee Image"}
-                                    />
-                                    <TextInput
-                                        id="image_url"
-                                        type="file"
-                                        name="image_url"
-                                        className="mt-1 block w-full"
-                                        onChange={(e) => setData("image_url", e.target.files[0])}
-                                    />
-                                    <InputError message={errors.image} className="mt-2" />
+                                <div className="col-span-2 sm:col-span-1">
+                                    <div className="mt-4">
+                                        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="avatar">Upload image</label>
+                                        <input
+                                            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                            aria-describedby="avatar"
+                                            id="avatar"
+                                            type="file"
+                                            name="avatar"
+                                            onChange={(e) => setData("avatar", e.target.files[0])}
+                                        />
+                                    </div>
                                 </div>
 
                                 <div className="mt-4">

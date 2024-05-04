@@ -4,13 +4,11 @@ import { Link, router } from "@inertiajs/react";
 import Pagination from "@/Components/Pagination";
 import TextInput from "@/Components/TextInput";
 import SelectInput from "@/Components/SelectInput";
+import { REACT_APP_BASE_URL } from "@/constant";
 
 const EmployeeTable = ({ auth, employees, queryParams = null, success }) => {
     queryParams = queryParams || {};
     useEffect(() => {
-        // for (let index = 0; index < 5; index++) {
-        //     console.log(employees[index])
-        // }
         console.log(employees.data[0].user)
     }, []);
     const [searchQuery, setSearchQuery] = useState('');
@@ -188,7 +186,10 @@ const EmployeeTable = ({ auth, employees, queryParams = null, success }) => {
                             >
                                 <td className="px-3 py-2">{employee.id}</td>
                                 <td className="px-3 py-2">
-                                    <img src={employee.user.avatar} alt={employee.fullname} />
+                                    <img className="h-10 w-10 rounded-full object-cover"
+                                        src={employee.user.avatar != null ? REACT_APP_BASE_URL + "/storage/" + employee.user.avatar :
+                                            "https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352156-stock-illustration-default-placeholder-profile-icon.jpg"}
+                                        alt={employee.fullname} />
                                 </td>
                                 <th className="px-5 py-3 text-black-100 text-nowrap hover:underline">
                                     <Link href={route("employee.show", employee.id)}>{employee.name}</Link>

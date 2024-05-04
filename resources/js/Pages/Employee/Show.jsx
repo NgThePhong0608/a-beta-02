@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Link, Head } from "@inertiajs/react";
 import { useState } from "react";
+import { REACT_APP_BASE_URL } from '../../constant';
+import Empty from "@/Components/Empty";
 
 const Show = ({ auth, employee, timeSheets }) => {
-
+    useEffect(() => {
+        console.log(REACT_APP_BASE_URL + "/storage/" + employee.user.avatar);
+        console.log(timeSheets.data.length);
+    })
     const checkRole = (auth) => {
         return auth.user.role === "admin";
     }
@@ -89,12 +94,14 @@ const Show = ({ auth, employee, timeSheets }) => {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="flex itmems-center justify-center rounded-sm">
+                        <div className="flex items-center justify-center rounded-sm">
                             <img
-                                src={employee.user.avatar}
-                                className="mt-5 w-64 h-64 rounded-full"
+                                src={employee.user.avatar != null ? REACT_APP_BASE_URL + "/storage/" + employee.user.avatar : "https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352156-stock-illustration-default-placeholder-profile-icon.jpg"}
+                                className="mt-5 w-64 h-64 rounded-full object-cover"
+                                alt="Employee Avatar"
                             />
                         </div>
+
                         <div className="p-6 text-gray-900 dark:text-gray-100">
                             <div className="grid gap-1 grid-cols-2 mt-2">
                                 <div className="grid-cols-3">
@@ -157,63 +164,68 @@ const Show = ({ auth, employee, timeSheets }) => {
                             </div>
                         </div>
                     </div>
-                    <div className="bg-white mt-5 p-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                        <h1 className="font-bold">Timesheet</h1>
-                        <div className="relative overflow-x-auto rounded shadow-md sm:rounded-lg">
-                            <select value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)}>
-                                <option value="">Select Month</option>
-                                <option value="1">January</option>
-                                <option value="2">February</option>
-                                <option value="3">March</option>
-                                <option value="4">April</option>
-                                <option value="5">May</option>
-                                <option value="6">June</option>
-                                <option value="7">July</option>
-                                <option value="8">August</option>
-                                <option value="9">September</option>
-                                <option value="10">October</option>
-                                <option value="11">November</option>
-                                <option value="12">December</option>
-                            </select>
-                            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                    <tr>
-                                        <th scope="col" className="px-6 py-3">
-                                            Id
-                                        </th>
-                                        <th scope="col" className="px-6 py-3">
-                                            Date
-                                        </th>
-                                        <th scope="col" className="px-6 py-3">
-                                            Time in
-                                        </th>
-                                        <th scope="col" className="px-6 py-3">
-                                            Time out
-                                        </th>
-                                        <th scope="col" className="px-6 py-3">
-                                            Duration
-                                        </th>
-                                        <th scope="col" className="px-6 py-3">
-                                            Status
-                                        </th>
-                                        {
-                                            checkRole(auth) && (
+                    {
+                        timeSheets.data.length > 0 ? (
+                            <div className="bg-white mt-5 p-5 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                                <h1 className="font-bold">Timesheet</h1>
+                                <div className="relative overflow-x-auto rounded shadow-md sm:rounded-lg">
+                                    <select value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)}>
+                                        <option value="">Select Month</option>
+                                        <option value="1">January</option>
+                                        <option value="2">February</option>
+                                        <option value="3">March</option>
+                                        <option value="4">April</option>
+                                        <option value="5">May</option>
+                                        <option value="6">June</option>
+                                        <option value="7">July</option>
+                                        <option value="8">August</option>
+                                        <option value="9">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
+                                    </select>
+                                    <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                            <tr>
                                                 <th scope="col" className="px-6 py-3">
-                                                    Action
+                                                    Id
                                                 </th>
-                                            )
-                                        }
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {renderTimeSheetRows()}
-                                </tbody>
-                            </table>
-                            <div className="text-xl font-bold p-4 text-black">
-                                {renderTotalDurationForSelectedMonth()}
+                                                <th scope="col" className="px-6 py-3">
+                                                    Date
+                                                </th>
+                                                <th scope="col" className="px-6 py-3">
+                                                    Time in
+                                                </th>
+                                                <th scope="col" className="px-6 py-3">
+                                                    Time out
+                                                </th>
+                                                <th scope="col" className="px-6 py-3">
+                                                    Duration
+                                                </th>
+                                                <th scope="col" className="px-6 py-3">
+                                                    Status
+                                                </th>
+                                                {
+                                                    checkRole(auth) && (
+                                                        <th scope="col" className="px-6 py-3">
+                                                            Action
+                                                        </th>
+                                                    )
+                                                }
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {renderTimeSheetRows()}
+                                        </tbody>
+                                    </table>
+                                    <div className="text-xl font-bold p-4 text-black">
+                                        {renderTotalDurationForSelectedMonth()}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        )
+                            : <Empty title="Timesheet" />
+                    }
                 </div>
             </div>
         </AuthenticatedLayout>

@@ -15,6 +15,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class EmployeeController extends Controller
 {
@@ -55,10 +56,21 @@ class EmployeeController extends Controller
     public function store(StoreEmployeeRequest $request)
     {
         $validatedData = $request->validated();
+
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $path = $file->storeAs('/uploads/avatar', $filename);
+            $validatedData['avatar'] = $path;
+        }
+        // dd($validatedData);
+
         $user = User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
+            'avatar' => $validatedData['avatar'], // default avatar if no avatar is uploaded
             'role' => 'employee',
         ]);
         $validatedData['user_id'] = $user->id;
@@ -116,14 +128,25 @@ class EmployeeController extends Controller
     public function update(UpdateEmployeeRequest $request, Employee $employee)
     {
         $validatedData = $request->validated();
-
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $path = $file->storeAs('public/uploads/avatar', $filename);
+            $path = str_replace('public/', '', $path);
+            $validatedData['avatar'] = $path;
+        }
         $user = $employee->user;
+        // dd($validatedData);
 
         $user->update([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => $validatedData['password'],
+            'avatar' => $validatedData['avatar'],
         ]);
+
+        $user->save();
 
         $employee->update([
             'fullname' => $validatedData['fullname'],
@@ -144,6 +167,9 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
+        if (Storage::exists($employee->user->avatar)) {
+            Storage::delete($employee->user->avatar);
+        }
         $employee->user->delete();
         $employee->delete();
         return redirect()->route('employee.index')->with('success', 'Employee deleted.');

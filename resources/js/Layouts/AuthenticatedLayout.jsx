@@ -3,6 +3,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
+import { REACT_APP_BASE_URL } from '@/constant';
 
 
 export default function Authenticated({ user, header, children }) {
@@ -73,8 +74,8 @@ export default function Authenticated({ user, header, children }) {
                                                     <div className="text-sm font-medium text-gray-900">{user.name}</div>
                                                     <div className="text-xs text-gray-500">{user.email}</div>
                                                 </div>
-                                                <img className="w-10 h-10 rounded-full m-4"
-                                                    src={user.avatar}
+                                                <img className="w-10 h-10 rounded-full m-4 object-cover"
+                                                    src={REACT_APP_BASE_URL + "/storage/" + user.avatar}
                                                     alt="" />
                                                 <svg
                                                     className="ms-2 -me-0.5 h-4 w-4"
