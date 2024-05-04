@@ -6,6 +6,7 @@ use App\Http\Controllers\TimeSheetController;
 use App\Http\Controllers\CheckinController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\EmployeeAttendance;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -48,6 +49,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/checkout', [CheckoutController::class, 'create'])->name('checkout');
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+
+    Route::get('/attendance', EmployeeAttendance::class)->name('attendance');
 });
 
 Route::middleware('auth')->group(function () {
