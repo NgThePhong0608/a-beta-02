@@ -224,7 +224,7 @@ const Show = ({ auth, employee, timeSheets }) => {
                                 </div>
                             </div>
                         )
-                            : <Empty title="Timesheet" />
+                            : <Empty title="Timesheet" description="No record found" />
                     }
                 </div>
             </div>
