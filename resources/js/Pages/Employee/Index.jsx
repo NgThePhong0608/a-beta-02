@@ -1,7 +1,6 @@
 import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Link, Head, router } from "@inertiajs/react";
-import Pagination from "@/Components/Pagination";
 import EmployeeTable from "@/Pages/Employee/EmployeeTable.jsx";
 
 const Index = ({ auth, employees, queryParams = null, success }) => {

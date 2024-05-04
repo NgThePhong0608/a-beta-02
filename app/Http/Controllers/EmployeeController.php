@@ -57,6 +57,7 @@ class EmployeeController extends Controller
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
+            'role' => 'employee',
         ]);
         $validatedData['user_id'] = $user->id;
         $employee = Employee::make([
