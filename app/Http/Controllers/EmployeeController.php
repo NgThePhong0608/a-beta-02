@@ -32,6 +32,8 @@ class EmployeeController extends Controller
             ->search($query)
             ->paginate(10)
             ->onEachSide(1);
+
+        // dd($employees);
         return inertia("Employee/Index", [
             'employees' => EmployeeResource::collection($employees),
             'queryParams' => request()->query() ?: null,

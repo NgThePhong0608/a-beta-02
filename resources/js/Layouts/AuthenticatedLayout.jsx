@@ -74,7 +74,7 @@ export default function Authenticated({ user, header, children }) {
                                                     <div className="text-xs text-gray-500">{user.email}</div>
                                                 </div>
                                                 <img className="w-10 h-10 rounded-full m-4"
-                                                    src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/32/32adf411d0fa815203c5ac140ca4ee4046211cd1.jpg"
+                                                    src={user.avatar}
                                                     alt="" />
                                                 <svg
                                                     className="ms-2 -me-0.5 h-4 w-4"
