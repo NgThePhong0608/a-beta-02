@@ -51,6 +51,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 
     Route::get('/attendance', EmployeeAttendance::class)->name('attendance');
+    Route::put('/employee/reset-password/{employee}', [EmployeeController::class, 'resetPassword'])->name('employee.reset-password');
 });
 
 Route::middleware('auth')->group(function () {

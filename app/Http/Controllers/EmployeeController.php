@@ -142,7 +142,6 @@ class EmployeeController extends Controller
         $user->update([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
-            'password' => $validatedData['password'],
             'avatar' => $validatedData['avatar'],
         ]);
 
@@ -191,5 +190,12 @@ class EmployeeController extends Controller
             return redirect()->route('login')->with('warning', "Sorry your email cannot be identified.");
         }
         return redirect()->route('login')->with('status', $status);
+    }
+
+    public function resetPassword(Employee $employee)
+    {
+        $employee->user->password = Hash::make(Employee::$DEFAULT_PASSWORD);
+        $employee->user->save();
+        return redirect()->route('employee.index')->with('success', 'Password reset.');
     }
 }
