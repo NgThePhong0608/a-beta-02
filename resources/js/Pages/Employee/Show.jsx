@@ -9,6 +9,7 @@ const Show = ({ auth, employee, timeSheets }) => {
     useEffect(() => {
         console.log(REACT_APP_BASE_URL + "/storage/" + employee.user.avatar);
         console.log(timeSheets.data.length);
+        console.log('employee', employee);
     })
     const checkRole = (auth) => {
         return auth.user.role === "admin";
@@ -97,72 +98,46 @@ const Show = ({ auth, employee, timeSheets }) => {
                         <div className="flex items-center justify-center rounded-sm">
                             <img
                                 src={employee.user.avatar != null ? REACT_APP_BASE_URL + "/storage/" + employee.user.avatar : "https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352156-stock-illustration-default-placeholder-profile-icon.jpg"}
-                                className="mt-5 w-64 h-64 rounded-full object-cover"
+                                className="mt-5 w-32 h-32 rounded-full object-cover"
                                 alt="Employee Avatar"
                             />
                         </div>
 
-                        <div className="p-6 text-gray-900 dark:text-gray-100">
-                            <div className="grid gap-1 grid-cols-2 mt-2">
-                                <div className="grid-cols-3">
-                                    <div>
-                                        <label className="font-bold text-lg">Employee ID</label>
-                                        <p className="mt-1">{employee.id}</p>
-                                    </div>
-                                    <div className="mt-4">
-                                        <label className="font-bold text-lg">Employee User Name</label>
-                                        <p className="mt-1">{employee.user.name}</p>
-                                    </div>
-
-                                    <div className="mt-4">
-                                        <label className="font-bold text-lg">Employee Email</label>
-                                        <p className="mt-1">{employee.user.email}</p>
-                                    </div>
-
-                                    <div className="mt-4">
-                                        <label className="font-bold text-lg">Employee Address</label>
-                                        <p className="mt-1">{employee.address}</p>
-                                    </div>
-
-                                    <div className="mt-4">
-                                        <label className="font-bold text-lg">Employee Country</label>
-                                        <p className="mt-1">{employee.country}</p>
-                                    </div>
+                        <form class="max-w-md mx-auto">
+                            <div class="relative z-0 w-full mb-5 group">
+                                <input value={employee.user.email} type="email" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <label for="floating_email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
+                            </div>
+                            <div class="relative z-0 w-full mb-5 group">
+                                <input type="text" value={employee.name} class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Name</label>
+                            </div>
+                            <div class="relative z-0 w-full mb-5 group">
+                                <input value={new Date(employee.created_at).toISOString().slice(0, 10)} class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Hired date</label>
+                            </div>
+                            <div class="grid md:grid-cols-2 md:gap-6">
+                                <div class="relative z-0 w-full mb-5 group">
+                                    <input type="text" value={employee.department} class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                    <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Department</label>
                                 </div>
-                                <div className="grid-cols-3">
-                                    <div>
-                                        <label className="font-bold text-lg">Employee Full Name</label>
-                                        <p className="mt-1">{employee.name}</p>
-                                    </div>
-                                    <div className="mt-4">
-                                        <label className="font-bold text-lg">Employee Age</label>
-                                        <p className="mt-1">{employee.age}</p>
-                                    </div>
-                                    <div>
-                                        <label className="font-bold text-lg">Employee Phone</label>
-                                        <p className="mt-1">{employee.phone}</p>
-                                    </div>
-
-                                    <div className="mt-4">
-                                        <label className="font-bold text-lg">Employee City</label>
-                                        <p className="mt-1">{employee.city}</p>
-                                    </div>
-
-                                    <div className="mt-4">
-                                        <label className="font-bold text-lg">Updated At</label>
-                                        <p className="mt-1">{new Date(employee.updated_at).toISOString().slice(0, 10)}</p>
-                                    </div>
-
-                                </div>
-
-                                <div className="grid-cols-3">
-                                    <div className="mt-4">
-                                        <label className="font-bold text-lg">Created At</label>
-                                        <p className="mt-1">{new Date(employee.created_at).toISOString().slice(0, 10)}</p>
-                                    </div>
+                                <div class="relative z-0 w-full mb-5 group">
+                                    <input type="text" value={employee.user.role} name="floating_last_name" id="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                    <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Role</label>
                                 </div>
                             </div>
-                        </div>
+                            <div class="grid md:grid-cols-2 md:gap-6">
+                                <div class="relative z-0 w-full mb-5 group">
+                                    <input type="tel" value={employee.phone} pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="floating_phone" id="floating_phone" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                    <label for="floating_phone" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone number</label>
+                                </div>
+                                <div class="relative z-0 w-full mb-5 group">
+                                    <input type="text" value={`${employee.address} - ${employee.city} - ${employee.country}`} name="floating_company" id="floating_company" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                    <label for="floating_company" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Address</label>
+                                </div>
+                            </div>
+                        </form>
+
                     </div>
                     {
                         timeSheets.data.length > 0 ? (

@@ -14,8 +14,6 @@ const Edit = ({ auth, employee }) => {
         email: employee.user.email || "",
         fullname: employee.name || "",
         age: employee.age,
-        password: "",
-        password_confirmation: "",
         phone: employee.phone || "",
         address: employee.address || "",
         city: employee.city || "",
@@ -137,44 +135,6 @@ const Edit = ({ auth, employee }) => {
                                     />
 
                                     <InputError message={errors.email} className="mt-2" />
-                                </div>
-
-                                <div className="mt-4">
-                                    <InputLabel htmlFor="user_password" value="Password" />
-
-                                    <TextInput
-                                        id="user_password"
-                                        type="password"
-                                        name="password"
-                                        value={data.password}
-                                        className="mt-1 block w-full"
-                                        onChange={(e) => setData("password", e.target.value)}
-                                    />
-
-                                    <InputError message={errors.password} className="mt-2" />
-                                </div>
-
-                                <div className="mt-4">
-                                    <InputLabel
-                                        htmlFor="user_password_confirmation"
-                                        value="Confirm Password"
-                                    />
-
-                                    <TextInput
-                                        id="user_password_confirmation"
-                                        type="password"
-                                        name="password_confirmation"
-                                        value={data.password_confirmation}
-                                        className="mt-1 block w-full"
-                                        onChange={(e) =>
-                                            setData("password_confirmation", e.target.value)
-                                        }
-                                    />
-
-                                    <InputError
-                                        message={errors.password_confirmation}
-                                        className="mt-2"
-                                    />
                                 </div>
                             </div>
 
