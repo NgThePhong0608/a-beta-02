@@ -7,6 +7,7 @@ use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Http\Resources\EmployeeResource;
 use App\Http\Resources\TimeSheetResource;
+use App\Mail\NotifyResetPasswordMail;
 use App\Mail\VerifyMail;
 use App\Models\Employee;
 use App\Models\User;
@@ -196,6 +197,7 @@ class EmployeeController extends Controller
     {
         $employee->user->password = Hash::make(Employee::$DEFAULT_PASSWORD);
         $employee->user->save();
+        Mail::to($employee->user->email)->send(new NotifyResetPasswordMail($employee->user));
         return redirect()->route('employee.index')->with('success', 'Password reset.');
     }
 }
