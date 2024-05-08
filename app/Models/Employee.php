@@ -23,6 +23,8 @@ class Employee extends Model
         'user_id',
     ];
 
+    public static $DEFAULT_PASSWORD = '123456789';
+
     public function timeSheets(): HasMany
     {
         return $this->hasMany(TimeSheet::class);
@@ -37,7 +39,7 @@ class Employee extends Model
 
     public function scopeSearch($query)
     {
-        if (request('department')){
+        if (request('department')) {
             $query->where('department', 'like', '%' . \request('department') . '%');
         }
         if (request('search')) {
