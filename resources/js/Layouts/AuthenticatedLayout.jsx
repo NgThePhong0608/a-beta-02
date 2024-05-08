@@ -20,7 +20,7 @@ export default function Authenticated({ user, header, children }) {
                                     <a className="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
                                         href="#" aria-label="Amela">
                                         <img className="h-20 w-auto"
-                                            src="https://static.vecteezy.com/system/resources/previews/007/263/716/non_2x/hrm-letter-logo-design-on-white-background-hrm-creative-initials-letter-logo-concept-hrm-letter-design-vector.jpg"
+                                            src='http://localhost:8000/storage/hrm.png'
                                             alt="AMELA Technology" decoding="async"></img>
                                     </a>
                                 </Link>

@@ -7,7 +7,7 @@ const Footer = () => {
                         <a href="#"
                            className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
                             <img
-                                src="https://static.vecteezy.com/system/resources/previews/007/263/716/non_2x/hrm-letter-logo-design-on-white-background-hrm-creative-initials-letter-logo-concept-hrm-letter-design-vector.jpg"
+                                src="http://localhost:8000/storage/hrm.png"
                                 className="h-8" alt="Flowbite Logo"/>
                             <span
                                 className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">HRM</span>
