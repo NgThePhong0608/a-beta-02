@@ -80,14 +80,12 @@ const Show = ({ auth, employee, timeSheets }) => {
                     <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                         {`Employee "${employee.name}"`}
                     </h2>
-                    {checkRole(auth) && (
-                        <Link
-                            href={route("employee.index")}
-                            className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
-                        >
-                            Back
-                        </Link>
-                    )}
+                    <Link
+                        href={route("employee.index")}
+                        className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
+                    >
+                        Back
+                    </Link>
                 </div>
             }
         >
