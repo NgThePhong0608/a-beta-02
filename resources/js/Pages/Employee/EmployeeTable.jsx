@@ -66,7 +66,7 @@ const EmployeeTable = ({ auth, employees, queryParams = null, success }) => {
     }
 
     const checkPermission = (employee) => {
-        return auth.user.id === employee.user.id;
+        return auth.user.role != 'admin' && auth.user.id === employee.user.id;
     }
 
     return (
