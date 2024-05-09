@@ -9,13 +9,13 @@ import { REACT_APP_BASE_URL } from "@/constant";
 const EmployeeTable = ({ auth, employees, queryParams = null, success }) => {
     queryParams = queryParams || {};
     useEffect(() => {
-        console.log(employees.data[0])
-        console.log(auth.user);
+
     }, []);
     const [searchQuery, setSearchQuery] = useState('');
     const searchFieldChanged = (name, value) => {
         if (value) {
             queryParams[name] = value;
+            setSearchQuery(value);
         } else {
             delete queryParams[name];
         }
@@ -76,6 +76,19 @@ const EmployeeTable = ({ auth, employees, queryParams = null, success }) => {
                     {success}
                 </div>
             )}
+
+            <div className="mb-3 p-4 flex justify-end">
+                <TextInput
+                    name="search"
+                    className="w-64"
+                    defaultValue={queryParams.search}
+                    placeholder="Type to search"
+                    onBlur={(e) => searchFieldChanged("search", e.target.value)}
+                    onKeyPress={(e) => onKeyPress("search", e)}
+                    onChange={(e) => handleSearchInputChange(e)}
+                />
+            </div>
+
             <div className="overflow-auto">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead
@@ -166,14 +179,6 @@ const EmployeeTable = ({ auth, employees, queryParams = null, success }) => {
                             <th className="px-3 py-3"></th>
                             <th className="px-3 py-3"></th>
                             <th className="px-5 py-3">
-                                <TextInput
-                                    className="w-full"
-                                    placeholder="Type to search"
-                                    value={queryParams.search}
-                                    onBlur={(e) => searchFieldChanged("search", e.target.value)}
-                                    onKeyPress={(e) => onKeyPress("search", e)}
-                                    onChange={handleSearchInputChange}
-                                />
                             </th>
                             <th className="px-3 py-3"></th>
                             <th className="px-3 py-3"></th>
