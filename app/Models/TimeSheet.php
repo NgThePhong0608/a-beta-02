@@ -41,4 +41,12 @@ class TimeSheet extends Model
             });
         });
     }
+
+    public function scopeSearchDate($query)
+    {
+        $query->when(request('startDate') && request('endDate'), function ($query) {
+            return $query->whereBetween('date', [request('startDate'), request('endDate')]);
+        });
+        return $query;
+    }
 }

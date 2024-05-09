@@ -17,10 +17,12 @@ class TimeSheetController extends Controller
         $query = TimeSheet::query()->with('employee');
         $sortField = request('sort_field', 'date');
         $sortDirection = request('sort_direction', 'asc');
-
+        $from = request('startDate');
+        $to = request('endDate');
 
         $timesheet = $query->orderBy($sortField, $sortDirection)
-            ->filter($query,request('search'))
+            ->filter($query, request('search'))
+            ->searchDate($query, $from, $to)
             ->paginate(10)
             ->onEachSide(1);
 

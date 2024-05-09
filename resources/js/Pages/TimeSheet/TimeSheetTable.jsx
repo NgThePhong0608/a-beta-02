@@ -4,10 +4,13 @@ import React, { useEffect, useState } from "react";
 import { useRoute } from "ziggy-js";
 import TableHeading from "@/Components/TableHeading.jsx";
 import TextInput from "@/Components/TextInput.jsx";
+import InputLabel from "@/Components/InputLabel";
 
 export const TimeSheetTable = ({ auth, timesheet, success, queryParams = null }) => {
     queryParams = queryParams ?? {};
     const [searchQuery, setSearchQuery] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
     const route = useRoute();
 
     const checkRole = (auth) => {
@@ -54,6 +57,20 @@ export const TimeSheetTable = ({ auth, timesheet, success, queryParams = null })
     const handleSearchInputChange = (e) => {
         setSearchQuery(e.target.value);
     };
+
+    const handleDateChange = (name, value) => {
+        console.log(value);
+        if (name === "startDate") {
+            setStartDate(value);
+            queryParams[name] = value;
+        } else if (name === "endDate") {
+            setEndDate(value);
+            queryParams[name] = value;
+        }
+        router.get(route("timesheet.index", queryParams));
+    };
+
+    console.log(timesheet.meta);
     return (<>
         <div className="p-6 text-gray-900 dark:text-gray-100">
             {success && (
@@ -62,6 +79,41 @@ export const TimeSheetTable = ({ auth, timesheet, success, queryParams = null })
                     {success}
                 </div>)}
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead>
+                    <tr>
+                        <th className="px-3 py-2">
+                            <InputLabel htmlFor="search" value="" />
+                            <TextInput
+                                id="search"
+                                className="w-full"
+                                defaultValue={queryParams.search}
+                                placeholder="Type to search"
+                                // value={queryParams.search}
+                                onBlur={(e) => searchFieldChanged("search", e.target.value)}
+                                onKeyPress={(e) => onKeyPress("search", e)}
+                                onChange={(e) => handleSearchInputChange(e)}
+                            />
+                        </th>
+                        <th>
+                            <input
+                                type="date"
+                                id="startDate"
+                                name="startDate"
+                                defaultValue={queryParams.startDate}
+                                onChange={(e) => handleDateChange("startDate", e.target.value)}
+                            />
+                        </th>
+                        <th>
+                            <input
+                                type="date"
+                                id="endDate"
+                                name="endDate"
+                                defaultValue={queryParams.endDate}
+                                onChange={(e) => handleDateChange("endDate", e.target.value)}
+                            />
+                        </th>
+                    </tr>
+                </thead>
                 <thead
                     className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
                     <tr className="text-nowrap">
@@ -112,21 +164,7 @@ export const TimeSheetTable = ({ auth, timesheet, success, queryParams = null })
                         </th>)}
                     </tr>
                 </thead>
-                <thead>
-                    <tr>
-                        <th className="px-3 py-2">
-                            <TextInput
-                                className="w-full"
-                                defaultValue={queryParams.search}
-                                placeholder="Type to search"
-                                // value={queryParams.search}
-                                onBlur={(e) => searchFieldChanged("search", e.target.value)}
-                                onKeyPress={(e) => onKeyPress("search", e)}
-                                onChange={(e) => handleSearchInputChange(e)}
-                            />
-                        </th>
-                    </tr>
-                </thead>
+
                 <tbody>
                     {timesheet.data.map((timeSheet) => (
                         <tr
