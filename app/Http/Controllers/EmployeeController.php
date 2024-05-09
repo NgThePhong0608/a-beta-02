@@ -62,7 +62,8 @@ class EmployeeController extends Controller
             $file = $request->file('avatar');
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
-            $path = $file->storeAs('/uploads/avatar', $filename);
+            $path = $file->storeAs('public/uploads/avatar', $filename);
+            $path = str_replace('public/', '', $path);
             $validatedData['avatar'] = $path;
         }
         // dd($validatedData);
