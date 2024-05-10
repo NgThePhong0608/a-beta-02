@@ -22,9 +22,10 @@ class AccountController extends Controller
         $sortField = request("sort_field", 'name');
         $sortDirection = request("sort_direction", "asc");
         $accounts = $query->orderBy($sortField, $sortDirection)
-            ->search($query, \request('search'))
+            ->search()
             ->paginate(10)
             ->onEachSide(1);
+        $accounts->appends(['search', request('search'), 'role' => request('role')]);
         return inertia('Account/Index', [
             'accounts' => AccountResource::collection($accounts),
             'queryParams' => request()->all(),

@@ -26,6 +26,8 @@ class TimeSheetController extends Controller
             ->paginate(10)
             ->onEachSide(1);
 
+        $timesheet->appends(['search' => request('search'), 'startDate' => $from, 'endDate' => $to]);
+
         return inertia('TimeSheet/Index', [
             'timesheet' => TimeSheetResource::collection($timesheet),
             'queryParams' => request()->query() ?: null,

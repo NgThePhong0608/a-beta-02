@@ -25,23 +25,24 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-
         $query = Employee::query()->with("user");
         $sortField = request("sort_field", 'id');
         $sortDirection = request("sort_direction", "desc");
 
-        $employees = $query->orderBy($sortField, $sortDirection)
+        $employees = $query
+            ->orderBy($sortField, $sortDirection)
             ->search($query)
             ->paginate(10)
             ->onEachSide(1);
 
-        // dd($employees);
+        $employees->appends(['search' => request('search'), 'department' => request('department')]);
         return inertia("Employee/Index", [
             'employees' => EmployeeResource::collection($employees),
             'queryParams' => request()->query() ?: null,
             'success' => session('success'),
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
