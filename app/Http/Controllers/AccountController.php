@@ -10,6 +10,9 @@ use App\Models\VerifyUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+
+use function PHPUnit\Framework\isNull;
 
 class AccountController extends Controller
 {
@@ -51,12 +54,22 @@ class AccountController extends Controller
             'email' => 'required|email|max:255|unique:users',
             'role' => 'required|in:employee,admin',
             'password' => 'required|min:8|max:255|confirmed',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $path = $file->storeAs('public/uploads/avatar', $filename);
+            $path = str_replace('public/', '', $path);
+            $validatedData['avatar'] = $path;
+        }
         $user = User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
             'role' => $validatedData['role'],
+            'avatar' => $validatedData['avatar'],
         ]);
 
         if ($validatedData['role'] === 'employee') {
@@ -105,7 +118,22 @@ class AccountController extends Controller
     public function update(Request $request, string $id)
     {
         $account = User::findOrFail($id);
-        $account->update($request->all());
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'role' => 'required|in:employee,admin',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $path = $file->storeAs('public/uploads/avatar', $filename);
+            $path = str_replace('public/', '', $path);
+            $validatedData['avatar'] = $path;
+        }
+
+        $account->update($validatedData);
         return redirect()->route('account.index')->with('success', 'Account updated successfully');
     }
 
@@ -115,7 +143,13 @@ class AccountController extends Controller
     public function destroy(string $id)
     {
         $account = User::findOrFail($id);
-        $account->employee->delete();
+        if ($account->employee) {
+            $account->employee->delete();
+        };
+        $path = 'public/' . $account->avatar;
+        if (Storage::exists($path)) {
+            Storage::delete($path);
+        }
         $account->delete();
         return redirect()->route('account.index')->with('success', 'Account deleted successfully');
     }

@@ -5,6 +5,7 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import SelectInput from "@/Components/SelectInput.jsx";
+import { REACT_APP_BASE_URL } from "@/constant";
 
 const Edit = ({ auth, account }) => {
 
@@ -12,8 +13,7 @@ const Edit = ({ auth, account }) => {
         name: account.name || "",
         email: account.email || "",
         role: account.role || "",
-        password: "",
-        password_confirmation: "",
+        avatar: account.avatar || "",
         _method: "PUT",
     });
 
@@ -40,10 +40,30 @@ const Edit = ({ auth, account }) => {
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <form
                             onSubmit={onSubmit}
-                            className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg grid grid-cols-2 gap-4"
+                            className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg my-0 mx-auto"
                         >
-                            <div className="col-span-2 sm:col-span-1">
+                            <div className="flex items-center flex-col">
+                                <div className="flex items-center justify-center rounded-sm">
+                                    <img
+                                        src={account.avatar != null ? REACT_APP_BASE_URL + "/storage/" + account.avatar : "https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352156-stock-illustration-default-placeholder-profile-icon.jpg"}
+                                        className="mt-5 w-40 h-40 rounded-full object-cover"
+                                        alt="Employee Avatar"
+                                    />
+                                </div>
+                                <div className="mt-4">
+                                    <InputLabel htmlFor="avatar" value="Avatar" />
 
+                                    <TextInput
+                                        type="file"
+                                        // defaultValue={data.avatar}
+                                        className="mt-1 block w-72"
+                                        id="avatar"
+                                        name="avatar"
+                                        onChange={(e) => setData("avatar", e.target.files[0])}
+                                    />
+
+                                    <InputError message={errors.name} className="mt-2" />
+                                </div>
                                 <div className="mt-4">
                                     <InputLabel htmlFor="user_name" value="Name" />
 
@@ -52,7 +72,7 @@ const Edit = ({ auth, account }) => {
                                         type="text"
                                         name="name"
                                         value={data.name}
-                                        className="mt-1 block w-full"
+                                        className="mt-1 block w-72"
                                         isFocused={true}
                                         onChange={(e) => setData("name", e.target.value)}
                                     />
@@ -68,7 +88,7 @@ const Edit = ({ auth, account }) => {
                                         type="text"
                                         name="email"
                                         value={data.email}
-                                        className="mt-1 block w-full"
+                                        className="mt-1 block w-72"
                                         onChange={(e) => setData("email", e.target.value)}
                                     />
 
@@ -84,7 +104,7 @@ const Edit = ({ auth, account }) => {
                                     <SelectInput
                                         name="role"
                                         id="role"
-                                        className="mt-1 block w-full"
+                                        className="mt-1 block w-72"
                                         defaultValue={data.role}
                                         onChange={(e) => setData("role", e.target.value)}
                                     >
@@ -99,59 +119,19 @@ const Edit = ({ auth, account }) => {
                                     />
                                 </div>
 
-                                <div className="mt-4">
-                                    <InputLabel htmlFor="password" value="Password" />
-
-                                    <TextInput
-                                        id="password"
-                                        type="password"
-                                        name="password"
-                                        value={data.password}
-                                        className="mt-1 block w-full"
-                                        onChange={(e) => setData("password", e.target.value)}
-                                    />
-
-                                    <InputError message={errors.password} className="mt-2" />
+                                <div className="mt-4 ">
+                                    <Link
+                                        href={route("account.index")}
+                                        className="bg-gray-100 py-1 px-3 text-gray-800 rounded shadow transition-all hover:bg-gray-200 mr-2"
+                                    >
+                                        Cancel
+                                    </Link>
+                                    <button className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600">
+                                        Submit
+                                    </button>
                                 </div>
-
-                                <div className="mt-4">
-                                    <InputLabel
-                                        htmlFor="password_confirmation"
-                                        value="Confirm Password"
-                                    />
-
-                                    <TextInput
-                                        id="password_confirmation"
-                                        type="password"
-                                        name="password_confirmation"
-                                        value={data.password_confirmation}
-                                        className="mt-1 block w-full"
-                                        onChange={(e) =>
-                                            setData("password_confirmation", e.target.value)
-                                        }
-                                    />
-
-                                    <InputError
-                                        message={errors.password_confirmation}
-                                        className="mt-2"
-                                    />
-                                </div>
-                            </div>
-
-
-                            <div className="col-span-2 text-right">
-                                <Link
-                                    href={route("account.index")}
-                                    className="bg-gray-100 py-1 px-3 text-gray-800 rounded shadow transition-all hover:bg-gray-200 mr-2"
-                                >
-                                    Cancel
-                                </Link>
-                                <button className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600">
-                                    Submit
-                                </button>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>

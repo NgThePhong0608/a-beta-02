@@ -209,10 +209,12 @@ const EmployeeTable = ({ auth, employees, queryParams = null, success }) => {
                             >
                                 <td className="px-3 py-2">{employee.id}</td>
                                 <td className="px-3 py-2">
-                                    <img className="h-10 w-10 rounded-full object-cover"
-                                        src={employee.user.avatar != null ? REACT_APP_BASE_URL + "/storage/" + employee.user.avatar :
-                                            "https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352156-stock-illustration-default-placeholder-profile-icon.jpg"}
-                                        alt={employee.fullname} />
+                                    <Link href={route("employee.show", employee.id)}>
+                                        <img className="h-10 w-10 rounded-full object-cover"
+                                            src={employee.user.avatar != null ? REACT_APP_BASE_URL + "/storage/" + employee.user.avatar :
+                                                "https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352156-stock-illustration-default-placeholder-profile-icon.jpg"}
+                                            alt={employee.fullname} />
+                                    </Link>
                                 </td>
                                 <th className="px-5 py-3 text-black-100 text-nowrap hover:underline">
                                     <Link href={route("employee.show", employee.id)}>{employee.name}</Link>

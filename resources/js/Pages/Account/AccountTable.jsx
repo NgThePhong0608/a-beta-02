@@ -4,6 +4,9 @@ import React, { useEffect, useState } from "react";
 import { useRoute } from "ziggy-js";
 import TableHeading from "@/Components/TableHeading.jsx";
 import TextInput from "@/Components/TextInput.jsx";
+import SelectInput from "@/Components/SelectInput";
+import { REACT_APP_BASE_URL } from "@/constant";
+
 const AccountTable = ({ auth, accounts, success, queryParams = null }) => {
     queryParams = queryParams ?? {};
     const [searchQuery, setSearchQuery] = useState('');
@@ -21,6 +24,7 @@ const AccountTable = ({ auth, accounts, success, queryParams = null }) => {
     }
 
     const searchFieldChanged = (name, value) => {
+        console.log(name, value);
         if (value) {
             queryParams[name] = value;
         } else {
@@ -86,6 +90,9 @@ const AccountTable = ({ auth, accounts, success, queryParams = null }) => {
                             Id
                         </TableHeading>
 
+                        <th className="px-3 py-3">
+                            Avatar
+                        </th>
                         <TableHeading
                             name="name"
                             sort_field={queryParams.sort_field}
@@ -126,13 +133,25 @@ const AccountTable = ({ auth, accounts, success, queryParams = null }) => {
                         </th>)}
                     </tr>
                 </thead>
-                {/* <thead>
+                <thead>
                     <tr>
-                        <th className="px-3 py-2">
-                            
+                        <th className="px-3 py-3"></th>
+                        <th className="px-3 py-3"></th>
+                        <th className="px-3 py-3"></th>
+                        <th className="px-3 py-3"></th>
+                        <th className="px-3 py-3">
+                            <SelectInput
+                                className="w-full"
+                                defaultValue={queryParams.role}
+                                onChange={(e) => searchFieldChanged("role", e.target.value)}
+                            >
+                                <option value="">Select Role</option>
+                                <option value="admin">Admin</option>
+                                <option value="employee">Employee</option>
+                            </SelectInput>
                         </th>
                     </tr>
-                </thead> */}
+                </thead>
                 <tbody>
                     {accounts.data.map((account) => (
                         <tr
@@ -141,6 +160,18 @@ const AccountTable = ({ auth, accounts, success, queryParams = null }) => {
                         >
                             <td className="px-3 py-2">
                                 {account.id}
+                            </td>
+                            <td className="px-3 py-2">
+                                <Link
+                                    href={route("account.show", account.id)}
+                                    className="font-bold text-black dark:text-blue-500 hover:underline"
+                                >
+                                    <img
+                                        src={account.avatar != null ? REACT_APP_BASE_URL + "/storage/" + account.avatar : "https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352156-stock-illustration-default-placeholder-profile-icon.jpg"}
+                                        className="h-10 w-10 rounded-full object-cover"
+                                        alt="Employee Avatar"
+                                    />
+                                </Link>
                             </td>
                             <th className="px-3 py-2 text-gray-700 text-nowrap">
                                 <Link

@@ -169,8 +169,9 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        if (Storage::exists($employee->user->avatar)) {
-            Storage::delete($employee->user->avatar);
+        $path = 'public/' . $employee->user->avatar;
+        if (Storage::exists($path)) {
+            Storage::delete($path);
         }
         $employee->user->delete();
         $employee->delete();
