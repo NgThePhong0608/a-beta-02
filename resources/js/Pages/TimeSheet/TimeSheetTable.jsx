@@ -82,7 +82,7 @@ export const TimeSheetTable = ({ auth, timesheet, success, queryParams = null })
                 <thead>
                     <tr>
                         <th className="px-3 py-2">
-                            <InputLabel htmlFor="search" value="" />
+                            <InputLabel htmlFor="search" value="Search" />
                             <TextInput
                                 id="search"
                                 className="w-full"
@@ -94,22 +94,26 @@ export const TimeSheetTable = ({ auth, timesheet, success, queryParams = null })
                                 onChange={(e) => handleSearchInputChange(e)}
                             />
                         </th>
-                        <th>
-                            <input
-                                type="date"
+                        <th className="px-3 py-2">
+                            <InputLabel htmlFor="startDate" value="From" />
+                            <TextInput
                                 id="startDate"
-                                name="startDate"
+                                type="date"
+                                className="w-full"
                                 defaultValue={queryParams.startDate}
                                 onChange={(e) => handleDateChange("startDate", e.target.value)}
+                                placeholder="Type to search"
                             />
                         </th>
-                        <th>
-                            <input
-                                type="date"
+                        <th className="px-3 py-2">
+                            <InputLabel htmlFor="endDate" value="To" />
+                            <TextInput
                                 id="endDate"
-                                name="endDate"
+                                type="date"
+                                className="w-full"
                                 defaultValue={queryParams.endDate}
                                 onChange={(e) => handleDateChange("endDate", e.target.value)}
+                                placeholder="Type to search"
                             />
                         </th>
                     </tr>
