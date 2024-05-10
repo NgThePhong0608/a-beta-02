@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use DateTime;
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -44,9 +46,35 @@ class TimeSheet extends Model
 
     public function scopeSearchDate($query)
     {
-        $query->when(request('startDate') && request('endDate'), function ($query) {
-            return $query->whereBetween('date', [request('startDate'), request('endDate')]);
-        });
-        return $query;
+        if (!request('startDate') && !request('endDate')) {
+            return $query;
+        } else if (request('startDate') && !request('endDate')) {
+            return $query->where('date', request('startDate'));
+        } else if (!request('startDate') && request('endDate')) {
+            return
+                $query->where('date', request('endDate'));
+        }
+        return $query->whereBetween('date', [request('startDate'), request('endDate')]);
+    }
+
+    public static function calculateDuration($timeIn, $timeOut)
+    {
+        $dateTimeIn = DateTime::createFromFormat('H:i:s', $timeIn);
+        $dateTimeOut = DateTime::createFromFormat('H:i:s', $timeOut);
+
+        if (!$dateTimeIn || !$dateTimeOut) {
+            throw new Exception("Invalid time format");
+        }
+
+        $interval = $dateTimeIn->diff($dateTimeOut);
+
+        $seconds = $interval->days * 24 * 60 * 60;
+        $seconds += $interval->h * 60 * 60;
+        $seconds += $interval->i * 60;
+        $seconds += $interval->s;
+
+        $decimalHours = $seconds / 3600.0;
+
+        return $decimalHours;
     }
 }

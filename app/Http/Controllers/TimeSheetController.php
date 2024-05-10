@@ -58,8 +58,10 @@ class TimeSheetController extends Controller
             'date' => 'required',
             'time_in' => 'required',
             'time_out' => 'required',
-            'duration' => 'required',
+            'status' => 'required',
         ]);
+        $data['employee_id'] = $timeSheet->employee->id;
+        $data['duration'] = TimeSheet::calculateDuration($data['time_in'], $data['time_out']);
         $timeSheet->update($data);
         return redirect()->route('timesheet.index')->with('success', 'TimeSheet updated.');
     }
