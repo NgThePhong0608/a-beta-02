@@ -60,6 +60,19 @@ const AccountTable = ({ auth, accounts, success, queryParams = null }) => {
                     role="alert">
                     {success}
                 </div>)}
+
+            <div className="mb-4 flex justify-end">
+                <TextInput
+                    name="search"
+                    className="w-64"
+                    defaultValue={queryParams.search}
+                    placeholder="Type to search"
+                    // value={queryParams.search}
+                    onBlur={(e) => searchFieldChanged("search", e.target.value)}
+                    onKeyPress={(e) => onKeyPress("search", e)}
+                    onChange={(e) => handleSearchInputChange(e)}
+                />
+            </div>
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead
                     className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
@@ -113,22 +126,13 @@ const AccountTable = ({ auth, accounts, success, queryParams = null }) => {
                         </th>)}
                     </tr>
                 </thead>
-                <thead>
+                {/* <thead>
                     <tr>
                         <th className="px-3 py-2">
-                            <TextInput
-                                name="search"
-                                className="w-full"
-                                defaultValue={queryParams.search}
-                                placeholder="Type to search"
-                                // value={queryParams.search}
-                                onBlur={(e) => searchFieldChanged("search", e.target.value)}
-                                onKeyPress={(e) => onKeyPress("search", e)}
-                                onChange={(e) => handleSearchInputChange(e)}
-                            />
+                            
                         </th>
                     </tr>
-                </thead>
+                </thead> */}
                 <tbody>
                     {accounts.data.map((account) => (
                         <tr
