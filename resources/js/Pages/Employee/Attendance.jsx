@@ -6,11 +6,6 @@ import Empty from "@/Components/Empty";
 
 const Attendance = ({ auth, employee, timeSheets }) => {
 
-    useEffect(() => {
-        console.log(employee);
-        console.log(timeSheets);
-    });
-
     const checkRole = (auth) => {
         return auth.user.role === "admin";
     }

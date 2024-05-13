@@ -5,6 +5,7 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import SelectInput from "@/Components/SelectInput.jsx";
+import { REACT_APP_BASE_URL } from '@/constant';
 
 const Edit = ({ auth, employee }) => {
 
@@ -52,12 +53,19 @@ const Edit = ({ auth, employee }) => {
                             onSubmit={onSubmit}
                             className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg grid grid-cols-2 gap-4"
                         >
-                            <div className="col-span-2 sm:col-span-1">
-                                <div className="col-span-2 sm:col-span-1">
+                            <div className="col-span-2">
+                                <div className="flex items-center justify-center rounded-sm">
+                                    <img
+                                        src={employee.user.avatar != null ? REACT_APP_BASE_URL + "/storage/" + employee.user.avatar : "https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352156-stock-illustration-default-placeholder-profile-icon.jpg"}
+                                        className="mt-5 w-40 h-40 rounded-full object-cover"
+                                        alt="Employee Avatar"
+                                    />
+                                </div>
+                                <div className="flex items-center justify-center">
                                     <div className="mt-4">
                                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="avatar">Upload image</label>
                                         <input
-                                            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                            className="block text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                                             aria-describedby="avatar"
                                             id="avatar"
                                             type="file"
@@ -66,7 +74,8 @@ const Edit = ({ auth, employee }) => {
                                         />
                                     </div>
                                 </div>
-
+                            </div>
+                            <div className="col-span-2 sm:col-span-1">
                                 <div className="mt-4">
                                     <InputLabel htmlFor="user_name" value="Employee User Name" />
 
