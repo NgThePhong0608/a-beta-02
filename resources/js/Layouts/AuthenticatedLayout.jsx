@@ -4,11 +4,10 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 import { REACT_APP_BASE_URL } from '@/constant';
-
+import { BellIcon } from '@heroicons/react/24/solid';
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
             <nav className="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
@@ -45,6 +44,10 @@ export default function Authenticated({ user, header, children }) {
                                                 active={route().current('timesheet.index')}>
                                                 Timesheet
                                             </NavLink>
+                                            <NavLink href={route('notification.index')}
+                                                active={route().current('notification.index')}>
+                                                Notification
+                                            </NavLink>
                                         </>
                                     ) : (
                                         <>
@@ -62,6 +65,24 @@ export default function Authenticated({ user, header, children }) {
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ms-6">
+                            {
+                                user.role === 'employee' && (
+                                    <div className='ms-3 relative'>
+                                        <Dropdown>
+                                            <Dropdown.Trigger>
+                                                <span className="inline-flex rounded-md">
+                                                    <Link href={route('notification.index')}
+                                                        type="button"
+                                                        className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
+                                                    >
+                                                        <BellIcon className="h-5 w-5" />
+                                                    </Link>
+                                                </span>
+                                            </Dropdown.Trigger>
+                                        </Dropdown>
+                                    </div>
+                                )
+                            }
                             <div className="ms-3 relative">
                                 <Dropdown>
                                     <Dropdown.Trigger>
@@ -75,7 +96,6 @@ export default function Authenticated({ user, header, children }) {
                                                     <div className="text-xs text-gray-500">{user.email}</div>
                                                 </div>
                                                 <img className="w-10 h-10 rounded-full m-4 object-cover"
-                                                    // src={REACT_APP_BASE_URL + "/storage/" + user.avatar}
                                                     src={user.avatar != null ? REACT_APP_BASE_URL + "/storage/" + user.avatar :
                                                         "https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352156-stock-illustration-default-placeholder-profile-icon.jpg"}
                                                     alt="" />
