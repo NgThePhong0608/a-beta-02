@@ -1,11 +1,8 @@
 import React from 'react'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
-import {Link, Head} from '@inertiajs/react';
-import {TimeSheetTable} from "@/Pages/TimeSheet/TimeSheetTable.jsx";
-const Index = ({ auth, timesheet, success, queryParams = null}) => {
-    const checkRole = (auth) => {
-        return auth.user.role === "admin";
-    };
+import { Head } from '@inertiajs/react';
+import { TimeSheetTable } from "@/Pages/TimeSheet/TimeSheetTable.jsx";
+const Index = ({ auth, timesheet, success, queryParams = null }) => {
 
     return (
         <AuthenticatedLayout
@@ -15,14 +12,6 @@ const Index = ({ auth, timesheet, success, queryParams = null}) => {
                     <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                         Timesheets
                     </h2>
-                    {checkRole(auth) && (
-                        <Link
-                            href={route("timesheet.create")}
-                            className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
-                        >
-                            Add new
-                        </Link>
-                    )}
                 </div>
             }
         >
