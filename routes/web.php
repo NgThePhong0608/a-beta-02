@@ -7,6 +7,7 @@ use App\Http\Controllers\CheckinController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\EmployeeAttendance;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -44,6 +45,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('timesheet', TimeSheetController::class);
     Route::resource('account', AccountController::class);
 
+    Route::post(
+        '/notification/{notification}/mark-as-read',
+        [NotificationController::class, 'markAsRead']
+    )->name('notification.mark-as-read');
+    Route::resource('notification', NotificationController::class);
     Route::get('/checkin', [CheckinController::class, 'create'])->name('checkin');
     Route::post('/checkin', [CheckinController::class, 'store'])->name('checkin.store');
 

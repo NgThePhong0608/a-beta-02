@@ -58,12 +58,25 @@ class User extends Authenticatable implements MustVerifyEmail
     public function scopeSearch($query)
     {
         if (request('search')) {
-            $query->where('name', 'like', '%'.request('search').'%')
-                ->orWhere('email', 'like', '%'.request('search').'%');
+            $query->where('name', 'like', '%' . request('search') . '%')
+                ->orWhere('email', 'like', '%' . request('search') . '%');
         }
 
         if (request('role')) {
             $query->where('role', request('role'));
+        }
+        return $query;
+    }
+
+    public function scopeDepartment($query, $deparment)
+    {
+        if ($deparment === 'ALL') {
+            return $query;
+        }
+        if (request('department')) {
+            $query->whereHas('employee', function ($query, $deparment) {
+                $query->where('department', $deparment);
+            });
         }
         return $query;
     }
