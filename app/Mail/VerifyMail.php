@@ -8,12 +8,14 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\URL;
 
 class VerifyMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $user;
+    public $verificationUrl;
 
     /**
      * Create a new message instance.
@@ -21,6 +23,11 @@ class VerifyMail extends Mailable
     public function __construct($user)
     {
         $this->user = $user;
+        $this->verificationUrl = URL::temporarySignedRoute(
+            'user.verify',
+            now()->addMinutes(60),
+            ['token' => $this->user->verifyUser->token]
+        );
     }
 
     /**
@@ -40,6 +47,7 @@ class VerifyMail extends Mailable
     {
         return new Content(
             view: 'emails.verifyUser',
+            with: ['verificationUrl' => $this->verificationUrl],
         );
     }
 
