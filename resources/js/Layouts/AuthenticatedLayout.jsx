@@ -48,6 +48,10 @@ export default function Authenticated({ user, header, children }) {
                                                 active={route().current('notification.index')}>
                                                 Notification
                                             </NavLink>
+                                            <NavLink href={route('permissions.index')}
+                                                active={route().current('permissions.index')}>
+                                                Permission
+                                            </NavLink>
                                         </>
                                     ) : (
                                         <>

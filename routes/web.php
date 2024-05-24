@@ -8,6 +8,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\EmployeeAttendance;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PermissionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -43,7 +44,6 @@ Route::get('/user/verify/{token}', [EmployeeController::class, 'verifyUser'])->n
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('employee', EmployeeController::class);
     Route::resource('timesheet', TimeSheetController::class);
-    Route::resource('account', AccountController::class);
 
     Route::post(
         '/notification/{notification}/mark-as-read',
@@ -57,7 +57,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 
     Route::get('/attendance', EmployeeAttendance::class)->name('attendance');
-    Route::put('/employee/reset-password/{employee}', [EmployeeController::class, 'resetPassword'])->name('employee.reset-password');
+
+    Route::middleware('admin')->group(function () {
+        Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions.index');
+        Route::get('/permissions/{permission}', [PermissionController::class, 'show'])->name('permissions.show');
+        Route::get('/permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permissions.edit');
+        Route::patch('/permissions/{permission}', [PermissionController::class, 'update'])->name('permissions.update');
+        Route::delete('/permissions/{permission}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
+        Route::put('/employee/reset-password/{employee}', [EmployeeController::class, 'resetPassword'])->name('employee.reset-password');
+        Route::resource('account', AccountController::class);
+    });
 });
 
 Route::middleware('auth')->group(function () {
