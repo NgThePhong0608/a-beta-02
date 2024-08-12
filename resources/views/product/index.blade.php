@@ -2,6 +2,10 @@
 @section('content')
     <div>
         <div class="flex justify-between mb-2">
+            <a href="{{ route('home') }}"
+            class="text-sm uppercase p-4 my-4 bg-red-600 hover:bg-red-700 text-white  font-bold">
+                Back
+            </a>
             <a href="{{ route('products.create') }}"
                class="text-sm uppercase p-4 my-4 bg-green-600 hover:bg-green-700 text-white  font-bold">Add new product</a>
         </div>
